@@ -1,7 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { HomePage } from './Pages/HomePage'
-import { ProfilePage } from './Pages/ProfilePage'
-import { AccessDeniedPage } from './Pages/AccessDeniedPage'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HomePage } from './Pages/HomePage';
+import { AccessDeniedPage } from './Pages/AccessDeniedPage';
+import { ProfilePage } from './Pages/ProfilePage';
 
 function App() {
 
