@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
 import { login } from "../Redux/user";
 
-
 export function LoginCard() {
     const paperLogStyle={padding :20,height:300,width:280, margin:"20px auto"}
     const paperRegStyle={padding :20,height:410,width:280, margin:"20px auto"}
@@ -27,7 +26,7 @@ export function LoginCard() {
             .then(
                 response => {
                     if (!response.ok) {
-                        localStorage.clear();
+                        sessionStorage.clear();
                         throw new Error('Неверный логин или пароль');
                     }
                     return response.json()
@@ -35,7 +34,19 @@ export function LoginCard() {
             )
             .then(
                 data => {
-                    localStorage.setItem("jwt", data)
+                    /*
+                    sessionStorage.setItem("id", String(jwt_data.Id))
+                    sessionStorage.setItem("email", String(jwt_data.Email))
+                    sessionStorage.setItem("nickname", String(jwt_data.Nickname))
+                    sessionStorage.setItem("idAim", String(jwt_data.IdAim))
+                    sessionStorage.setItem("InitWeight", String(jwt_data.InitWeight))
+                    sessionStorage.setItem("CurWeight", String(jwt_data.CurWeight))
+                    sessionStorage.setItem("AimWeight", String(jwt_data.AimWeight))
+                    sessionStorage.setItem("IdActivity", String(jwt_data.IdActivity))
+                    sessionStorage.setItem("KcalPerDay", String(jwt_data.KcalPerDay))
+                    sessionStorage.setItem("RoleId", String(jwt_data.RoleId))
+                    */
+                    sessionStorage.setItem("jwt", data)
                     dispatch(login(data))
                     navigate("/profile")
                 }
