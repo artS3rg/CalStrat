@@ -1,5 +1,5 @@
 import { Grid, Paper, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '/src/Styles/Text.css';
 
 export function LoginCard() {
@@ -7,6 +7,28 @@ export function LoginCard() {
     const paperRegStyle={padding :20,height:410,width:280, margin:"20px auto"}
     const btnstyle={margin:'8px 0'}
     const [stateForm, setStateForm] = useState<boolean>(true)
+
+    const [stateLogin, setStateLogin] = useState<string>()
+    const [statePass, setStatePass] = useState<string>()
+
+    const [stateAuth, setStateAuth] = useState<boolean>(false)
+
+    useEffect(() => {
+        let req : string = "https://localhost:7294/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
+        fetch(req)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Неверный логин или пароль');
+                    }
+                    console.log(response.json());
+                }
+            )
+            .catch(error => {
+                console.error('Произошла ошибка при выполнении запроса:', error);
+            });
+    }, [stateAuth])
+
     return (
         <Grid 
         container
@@ -29,7 +51,7 @@ export function LoginCard() {
                 sx={{ color: "#FFFFFF", fontFamily: "Roboto" }} textAlign="center">
                     <h2 className="roboto-bold">Авторизация</h2>
                 </Grid>
-                <TextField
+                <TextField onChange={(e) => setStateLogin(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -46,7 +68,7 @@ export function LoginCard() {
                     }
                 }}
                 variant="standard" placeholder='Логин' margin="dense" fullWidth required/>
-                <TextField
+                <TextField onChange={(e) => setStatePass(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -64,7 +86,7 @@ export function LoginCard() {
                 }}
                 className="roboto-medium"
                 placeholder='Пароль' margin="dense" type='password' variant="standard" fullWidth required/>
-                <Button
+                <Button onClick={() => setStateAuth(true)}
                 sx={{
                     backgroundColor: "#902B2B",
                     "&:hover": { backgroundColor: "#902B2B" }

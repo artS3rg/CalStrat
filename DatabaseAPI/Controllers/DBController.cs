@@ -1,5 +1,10 @@
 ﻿using DatabaseAPI.Entities;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace DatabaseAPI.Controllers
 {
@@ -93,7 +98,7 @@ namespace DatabaseAPI.Controllers
 
         //Добавление активности
         [HttpPost("PostActivity")]
-        public IResult AddActivity(Activity newAct)
+        public IResult AddActivity([FromQuery] Activity newAct)
         {
             Activity? act = _db.Activities.FirstOrDefault(p => p.Name == newAct.Name);
             if (act == null)
@@ -212,7 +217,7 @@ namespace DatabaseAPI.Controllers
 
         //Добавление юзера
         [HttpPost("PostUser")]
-        public IResult AddUser(User newUser)
+        public IResult AddUser([FromQuery] User newUser)
         {
             User? target = _db.Users.FirstOrDefault(p => p.Email == newUser.Email);
             if (target == null)
@@ -393,5 +398,50 @@ namespace DatabaseAPI.Controllers
                 return Results.NotFound(new { message = "Пользователя не существует" });
             }
         }
+
+        //Проверка пользователя
+        [HttpGet("CheckUser")]
+        public IResult CheckUser([FromQuery] string login, string pass)
+        {
+            User? target = _db.Users.FirstOrDefault(p => p.Email == login && p.Password == pass); ;
+            if(target != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", target.Id.ToString()),
+                    new Claim("Email", target.Email),
+                    new Claim("Nickname", target.Nickname),
+                    new Claim("IdAim", target.IdAim.ToString()),
+                    new Claim("InitWeight", target.InitWeight.ToString()),
+                    new Claim("CurWeight", target.CurWeight.ToString()),
+                    new Claim("AimWeight", target.AimWeight.ToString()),
+                    new Claim("IdActivity", target.IdActivity.ToString()),
+                    new Claim("KcalPerDay", target.KcalPerDay.ToString()),
+                    new Claim("RoleId", target.RoleId.ToString())
+                };
+                var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                target.AToken = jwt.ToString();
+                _db.SaveChanges();
+                return Results.Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
+            }
+            else
+            {
+                return Results.NotFound("fack");
+            }
+        }
     }
+}
+
+public class AuthOptions
+{
+    public const string ISSUER = "MyAuthServer"; // издатель токена
+    public const string AUDIENCE = "MyAuthClient"; // потребитель токена
+    const string KEY = "mysupersecret_secretsecretsecretkey!123";   // ключ для шифрации
+    public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
 }

@@ -1,4 +1,5 @@
 using DatabaseAPI;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -103,3 +103,11 @@ C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAP
 C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\obj\Debug\net8.0\DatabaseAPI.pdb
 C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\obj\Debug\net8.0\DatabaseAPI.genruntimeconfig.cache
 C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\obj\Debug\net8.0\ref\DatabaseAPI.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\yuram\OneDrive\Рабочий стол\курсач\CalStrat\DatabaseAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
