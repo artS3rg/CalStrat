@@ -27,7 +27,7 @@ const initialState: UserState = {
   RoleId : 0
 }
 
-export const authSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -38,4 +38,4 @@ export const authSlice = createSlice({
   }
 })
 
-export const { login } = authSlice.actions
+export const { login } = userSlice.actions

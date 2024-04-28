@@ -2,8 +2,8 @@ import { Grid, Paper, TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import '/src/Styles/Text.css';
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "./Redux/hooks";
-import { login } from "./Redux/auth";
+import { useAppDispatch } from "../Redux/hooks";
+import { login } from "../Redux/user";
 
 
 export function LoginCard() {
