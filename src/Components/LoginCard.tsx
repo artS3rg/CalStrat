@@ -2,6 +2,8 @@ import { Grid, Paper, TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import '/src/Styles/Text.css';
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "./Redux/hooks";
+import { login } from "./Redux/auth";
 
 
 export function LoginCard() {
@@ -15,9 +17,9 @@ export function LoginCard() {
 
     const [stateAuth, setStateAuth] = useState<boolean>(false)
 
-    const [stateJWT, setStateJWT] = useState<string>()
-
     const navigate = useNavigate();
+
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         let req : string = "https://localhost:7294/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
@@ -32,10 +34,11 @@ export function LoginCard() {
                 }
             )
             .then(
-                data => localStorage.setItem("jwt", data)
-            )
-            .then(
-                () => navigate("/profile")
+                data => {
+                    localStorage.setItem("jwt", data)
+                    dispatch(login(data))
+                    navigate("/profile")
+                }
             )
             .catch(error => {
                 console.error('Произошла ошибка при выполнении запроса:', error);
