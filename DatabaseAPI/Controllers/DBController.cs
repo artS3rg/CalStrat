@@ -425,9 +425,10 @@ namespace DatabaseAPI.Controllers
                     claims: claims,
                     expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-                target.AToken = jwt.ToString();
+                var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                target.AToken = AToken;
                 _db.SaveChanges();
-                return Results.Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
+                return Results.Ok(AToken);
             }
             else
             {
