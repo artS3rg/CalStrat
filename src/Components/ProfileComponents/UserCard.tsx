@@ -3,9 +3,10 @@ import React from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import '/src/Styles/Text.css';
-import { useAppDispatch } from "../Redux/hooks";
-import { logout } from "../Redux/user";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+import { UserState, logout } from "../Redux/user";
 import { Navigate, useNavigate } from 'react-router-dom';
+import { RootState } from "../Redux/store";
 
 
 const theme = createTheme({
@@ -14,25 +15,15 @@ const theme = createTheme({
     }
 });
 
-interface User {
-    id: number;
-    login: string;
-    password: string;
-    email: string;
-    gender: string;
-    kkal: number;
-    purpose: string;
-    startWeight: number;
-    currentWeight: number;
-    purposeWeight: number;
-}
-
 const genders = ["Муж", "Жен"];
 const purposes = ["Снижение веса", "Поддерживание веса", "Набор веса"];
 
 export default function UserCard() {
 
     const dispatch = useAppDispatch()
+
+    const selector : UserState = useAppSelector((state: RootState) => state.user)
+
     const navigate = useNavigate()
 
     const [login, setLogin] = React.useState("dasha");
@@ -114,7 +105,7 @@ export default function UserCard() {
                         <p className="item_info">Логин</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{login}</p> :
+                                <p className="item_info_value">{selector.Nickname}</p> :
                                 <TextField
                                     type="text"
                                     color="primary"
@@ -149,7 +140,7 @@ export default function UserCard() {
                         <p className="item_info">Почта</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{email}</p> :
+                                <p className="item_info_value">{selector.Email}</p> :
                                 <TextField
                                     type="email"
                                     size="small"
@@ -185,7 +176,7 @@ export default function UserCard() {
                         <p className="item_info">Цель</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{purpose}</p> :
+                                <p className="item_info_value">{purposes[selector.IdAim]}</p> :
                                 <TextField
                                     select
                                     color="primary"
@@ -202,7 +193,7 @@ export default function UserCard() {
                         <p className="item_info">Начальный вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{startWeight}</p> :
+                                <p className="item_info_value">{selector.InitWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
@@ -214,7 +205,7 @@ export default function UserCard() {
                         <p className="item_info">Текущий вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{currentWeight}</p> :
+                                <p className="item_info_value">{selector.CurWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
@@ -227,7 +218,7 @@ export default function UserCard() {
                         <p className="item_info">Целевой вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{purposeWeight}</p> :
+                                <p className="item_info_value">{selector.AimWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
