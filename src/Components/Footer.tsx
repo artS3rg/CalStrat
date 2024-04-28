@@ -16,7 +16,7 @@ export function Footer() {
         >
             <Typography>
                 Project{' '}
-                <Link href="https://github.com/MaksimovYuriy/API_DB" underline="none">Git</Link>
+                <Link href="https://github.com/artS3rg/CalStrat" underline="none">Git</Link>
             </Typography>
             <Typography>
                 Калорийный стратег 2024 - Built with MUI

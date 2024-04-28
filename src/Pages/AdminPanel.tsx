@@ -1,8 +1,8 @@
-import { Box, Button, Grid, Paper, Stack } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { responseRequest } from "../Components/responseRequest";
-import { searchUser } from "../Components/searchUser";
-import { searchProduct } from "../Components/searchProduct";
+import { responseRequest } from "../Components/AdminComponents/responseRequest";
+import { searchUser } from "../Components/AdminComponents/searchUser";
+import { searchProduct } from "../Components/AdminComponents/searchProduct";
 
 export function AdminPanel() {
     const [stateUserButton, setStateUserButton] = useState<boolean>(false);

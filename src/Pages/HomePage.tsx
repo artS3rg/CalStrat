@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { LoginCard } from "../Components/LoginCard";
+import { LoginCard } from "../Components/HomeComponents/LoginCard";
 import { Footer } from "../Components/Footer";
 
 export function HomePage() {

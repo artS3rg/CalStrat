@@ -1,13 +1,13 @@
-import { Box, Button, Paper, TextField } from "@material-ui/core";
-import { responseProduct } from "./responseProduct";
+import { Box, Button, Paper, TextField } from "@mui/material";
+import { responseUser } from "./responseUser";
 
-export function searchProduct(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
+export function searchUser(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
     return (
         <>
             <Box sx={{ 'textAlign': 'center' }}>
                 <TextField
                     id="outlined-basic"
-                    label="Введите название продукта"
+                    label="Введите почту пользователя"
                     variant="outlined"
                     sx={{
                         width: 800
@@ -31,7 +31,7 @@ export function searchProduct(stateButton: boolean, func: React.Dispatch<React.S
                     </Paper>
                 </Button>
             </Box>
-            {stateButton && responseProduct()}
+            {stateButton && responseUser()}
         </>
     )
 }

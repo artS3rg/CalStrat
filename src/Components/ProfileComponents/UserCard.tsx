@@ -2,7 +2,7 @@ import { Avatar, Button, Grid, IconButton, InputAdornment, MenuItem, Stack, Text
 import React from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import '/src/Text.css';
+import '/src/Styles/Text.css';
 
 
 const theme = createTheme({

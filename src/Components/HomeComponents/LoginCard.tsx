@@ -1,6 +1,6 @@
 import { Grid, Paper, TextField, Button } from "@mui/material";
 import { useState } from "react";
-import './Text.css';
+import '/src/Styles/Text.css';
 
 export function LoginCard() {
     const paperLogStyle={padding :20,height:300,width:280, margin:"20px auto"}

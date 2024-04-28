@@ -1,6 +1,6 @@
-import { Box, Button, Paper, TextField } from "@material-ui/core";
+import { Box, Button, Paper, TextField } from "@mui/material";
 
-export function responseRequest() {
+export function responseProduct() {
     return (
         <>
             <Box
@@ -30,34 +30,20 @@ export function responseRequest() {
                 </div>
                 <div>
                     <TextField
-                        id="outlined-read-only-input"
+                        id="outlined-required"
                         label="Kcal / 100g"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
                     <TextField
-                        id="outlined-read-only-input"
+                        id="outlined-required"
                         label="Proteins / 100g"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
-                </div>
-                <div>
                     <TextField
-                        id="outlined-read-only-input"
+                        id="outlined-required"
                         label="Fats / 100g"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
                     <TextField
-                        id="outlined-read-only-input"
+                        id="outlined-required"
                         label="Carbohydrates / 100g"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
                 </div>
             </Box>
@@ -69,12 +55,12 @@ export function responseRequest() {
                             textAlign: "center",
                             p: 2,
                             height: 20,
-                            width: 120,
+                            width: 100,
                             backgroundColor: "#902B2B",
                             "&:hover": { backgroundColor: "#902B2B" }
                         }}
                     >
-                        Подтвердить
+                        Сохранить
                     </Paper>
                 </Button>
             </Box>
