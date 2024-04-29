@@ -24,11 +24,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin" element={(selector.RoleId == 0) ? <Navigate to="/" /> : <AdminPanel />} />
+        <Route path="/admin" element={(selector.RoleId == 0) ? <AccessDeniedPage /> : <AdminPanel />} />
         <Route path="/" element={(selector.Email == "") ? <Navigate to="/home" /> : <Navigate to="/profile" />} />
         <Route path="/home" element={(selector.Email == "") ? <HomePage /> : <Navigate to="/profile" />}/>
         <Route path="/profile" element={(selector.Email == "") ? <Navigate to="/home" /> : <ProfilePage />} />
-        <Route path="/access" element={<AccessDeniedPage />} />
       </Routes>
     </BrowserRouter>
   )
