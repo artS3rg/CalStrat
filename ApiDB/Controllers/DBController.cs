@@ -536,6 +536,28 @@ namespace ApiDB.Controllers
                 return Results.NotFound();
             }
         }
+
+        //Рега
+        [HttpPost("Registration")]
+        public IResult Registration(string email, string pass, string nick) 
+        {
+            User user = new User()
+            {
+                Email = email,
+                Password = pass,
+                Nickname = nick,
+                IdAim = 0,
+                InitWeight = 0,
+                CurWeight = 0,
+                AimWeight = 0,
+                IdActivity = 0,
+                KcalPerDay = 0,
+                RoleId = 0
+            };
+            _db.Users.Add(user);
+            _db.SaveChanges();
+            return Results.Ok(user);
+        }
     }
 }
 

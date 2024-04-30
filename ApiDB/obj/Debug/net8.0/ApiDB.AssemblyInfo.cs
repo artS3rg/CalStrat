@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiDB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffe46df73c367c9f127e862bc685f696659fef0b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2756bd5facc5116589b42987813a47beaf8cc601")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiDB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiDB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
