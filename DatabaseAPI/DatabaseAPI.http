@@ -1,6 +1,0 @@
-@DatabaseAPI_HostAddress = http://localhost:5189
-
-GET {{DatabaseAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
