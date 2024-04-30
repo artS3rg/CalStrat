@@ -1,6 +1,9 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { UserAdmin } from "../../Pages/AdminPanel";
 
-export function responseUser() {
+export function responseUser(data: UserAdmin) {
     return (
         <>
             <Box
@@ -13,14 +16,14 @@ export function responseUser() {
                 autoComplete="off"
             >
                 <div>
-                    <TextField
+                    <TextField value={data?.Id}
                         id="outlined-read-only-input"
                         label="Id"
                         InputProps={{
                             readOnly: true,
                         }}
                     />
-                    <TextField
+                    <TextField value={data?.Email}
                         id="outlined-read-only-input"
                         label="Email"
                         InputProps={{
@@ -29,17 +32,12 @@ export function responseUser() {
                     />
                 </div>
                 <div>
-                    <TextField
-                        id="outlined-required"
-                        label="Password"
-                    />
-                    <TextField
-                        id="outlined-required"
+                    <TextField value={data?.Nickname}
+                        id="outlined-read-only-input"
                         label="Nickname"
-                    />
-                    <TextField
-                        id="outlined-required"
-                        label="Role"
+                        InputProps={{
+                            readOnly: true,
+                        }}
                     />
                 </div>
             </Box>

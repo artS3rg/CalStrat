@@ -3,6 +3,34 @@ import { useEffect, useState } from "react";
 import { responseRequest } from "../Components/AdminComponents/responseRequest";
 import { searchUser } from "../Components/AdminComponents/searchUser";
 import { searchProduct } from "../Components/AdminComponents/searchProduct";
+import { responseUser } from "../Components/AdminComponents/responseUser";
+import { responseProduct } from "../Components/AdminComponents/responseProduct";
+import { jwtDecode } from "jwt-decode";
+
+export interface UserAdmin {
+    Id: string
+    Email: string
+    Nickname: string
+    RoleID: string
+}
+
+export interface ProductAdmin {
+    Id: string
+    Name: string
+    Kcal: string
+    Proteins: string
+    Fats: string
+    Carbohydrates: string
+}
+
+export interface Req {
+    Id: string
+    Name: string
+    Kcal: string
+    Proteins: string
+    Fats: string
+    Carbohydrates: string
+}
 
 export function AdminPanel() {
     const [stateUserButton, setStateUserButton] = useState<boolean>(false);
@@ -12,6 +40,14 @@ export function AdminPanel() {
 
     const [stateResponseUserButton, setStateResponseUserButton] = useState<boolean>(false);
     const [stateResponseProductButton, setStateResponseProductButton] = useState<boolean>(false);
+
+    const [email, setEmail] = useState<string>("");
+    const [userAdmin, setUserAdmin] = useState<UserAdmin>();
+
+    const [product, setProduct] = useState<string>("")
+    const [productAdmin, setProductAdmin] = useState<ProductAdmin>();
+
+    const [req, setReq] = useState<Req>();
 
     useEffect(() => {
         if (stateRequestButton == true) {
@@ -39,6 +75,66 @@ export function AdminPanel() {
             setStateResponseProductButton(false);
         }
     }, [stateProductButton])
+
+    useEffect(() => {
+        let req: string = "https://localhost:7129/DB/SearchUserAdmin?email=" + email
+        fetch(req)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                    return response.json()
+                }
+            )
+            .then(
+                data => {
+                    const jwt_data: UserAdmin = jwtDecode(data)
+                    setUserAdmin(jwt_data)
+                    console.log(jwt_data)
+                }
+            )
+    }, [stateResponseUserButton])
+
+    useEffect(() => {
+        let req: string = "https://localhost:7129/DB/SearchProductAdmin?product=" + product
+        fetch(req)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                    return response.json()
+                }
+            )
+            .then(
+                data => {
+                    const jwt_data: ProductAdmin = jwtDecode(data)
+                    setProductAdmin(jwt_data)
+                    console.log(jwt_data)
+                }
+            )
+    }, [stateResponseProductButton])
+
+    useEffect(() => {
+        let req: string = "https://localhost:7129/DB/GetRequest"
+        fetch(req)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                    return response.json()
+                }
+            )
+            .then(
+                data => {
+                    const jwt_data: Req = jwtDecode(data)
+                    setReq(jwt_data)
+                    console.log(jwt_data)
+                }
+            )
+    }, [stateRequestButton])
 
     return (
         <div style={{
@@ -110,9 +206,11 @@ export function AdminPanel() {
                     </Grid>
                 </Grid>
 
-                {stateUserButton && searchUser(stateResponseUserButton, setStateResponseUserButton)}
-                {stateProductButton && searchProduct(stateResponseProductButton, setStateResponseProductButton)}
-                {stateRequestButton && responseRequest()}
+                {stateUserButton && searchUser(stateResponseUserButton, setStateResponseUserButton, setEmail)}
+                {stateProductButton && searchProduct(stateResponseProductButton, setStateResponseProductButton, setProduct)}
+                {stateRequestButton && responseRequest(req!)}
+                {stateResponseUserButton && responseUser(userAdmin!)}
+                {stateResponseProductButton && responseProduct(productAdmin!)}
             </Stack>
         </div>
     )

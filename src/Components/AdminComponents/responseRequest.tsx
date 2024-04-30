@@ -1,6 +1,7 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
+import { Req } from "../../Pages/AdminPanel";
 
-export function responseRequest() {
+export function responseRequest(req: Req) {
     return (
         <>
             <Box
@@ -13,14 +14,14 @@ export function responseRequest() {
                 autoComplete="off"
             >
                 <div>
-                    <TextField
+                    <TextField value={req?.Id}
                         id="outlined-read-only-input"
                         label="Id"
                         InputProps={{
                             readOnly: true,
                         }}
                     />
-                    <TextField
+                    <TextField value={req?.Name}
                         id="outlined-read-only-input"
                         label="Name"
                         InputProps={{
@@ -29,14 +30,14 @@ export function responseRequest() {
                     />
                 </div>
                 <div>
-                    <TextField
+                    <TextField value={req?.Kcal}
                         id="outlined-read-only-input"
                         label="Kcal / 100g"
                         InputProps={{
                             readOnly: true,
                         }}
                     />
-                    <TextField
+                    <TextField value={req?.Proteins}
                         id="outlined-read-only-input"
                         label="Proteins / 100g"
                         InputProps={{
@@ -45,14 +46,14 @@ export function responseRequest() {
                     />
                 </div>
                 <div>
-                    <TextField
+                    <TextField value={req?.Fats}
                         id="outlined-read-only-input"
                         label="Fats / 100g"
                         InputProps={{
                             readOnly: true,
                         }}
                     />
-                    <TextField
+                    <TextField value={req?.Carbohydrates}
                         id="outlined-read-only-input"
                         label="Carbohydrates / 100g"
                         InputProps={{

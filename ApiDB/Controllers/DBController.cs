@@ -459,7 +459,21 @@ namespace ApiDB.Controllers
             Product? target = _db.Products.FirstOrDefault(p => p.Name == product);
             if (target != null)
             {
-                return Results.Json(target);
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", target.Id.ToString()),
+                    new Claim("Name", target.Name),
+                    new Claim("Kcal", target.Kcal.ToString()),
+                    new Claim("Proteins", target.Proteins.ToString()),
+                    new Claim("Fats", target.Fats.ToString()),
+                    new Claim("Carbohydrates", target.Carbohydrates.ToString())
+                };
+                var jwt = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30))
+                );
+                var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                return Results.Ok(AToken);
             }
             else
             {
@@ -501,7 +515,21 @@ namespace ApiDB.Controllers
             Request? target = _db.Requests.FirstOrDefault(p => p.Status == false);
             if (target != null)
             {
-                return Results.Json(target);
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", target.Id.ToString()),
+                    new Claim("Name", target.Name),
+                    new Claim("Kcal", target.Kcal.ToString()),
+                    new Claim("Proteins", target.Proteins.ToString()),
+                    new Claim("Fats", target.Fats.ToString()),
+                    new Claim("Carbohydrates", target.Carbohydrates.ToString())
+                };
+                var jwt = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30))
+                );
+                var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                return Results.Ok(AToken);
             }
             else
             {

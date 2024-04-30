@@ -1,11 +1,11 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
 import { responseProduct } from "./responseProduct";
 
-export function searchProduct(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
+export function searchProduct(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>, funcProduct: React.Dispatch<React.SetStateAction<string>>) {
     return (
         <>
             <Box sx={{ 'textAlign': 'center' }}>
-                <TextField
+                <TextField onChange={(e) => funcProduct(e.target.value)}
                     id="outlined-basic"
                     label="Введите название продукта"
                     variant="outlined"
@@ -31,7 +31,6 @@ export function searchProduct(stateButton: boolean, func: React.Dispatch<React.S
                     </Paper>
                 </Button>
             </Box>
-            {stateButton && responseProduct()}
         </>
     )
 }

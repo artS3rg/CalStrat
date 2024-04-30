@@ -1,11 +1,14 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
 import { responseUser } from "./responseUser";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
-export function searchUser(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
+export function searchUser(stateButton: boolean, func: React.Dispatch<React.SetStateAction<boolean>>, emailFunc: React.Dispatch<React.SetStateAction<string>>) {
+
     return (
         <>
             <Box sx={{ 'textAlign': 'center' }}>
-                <TextField
+                <TextField onChange={(e) => emailFunc(e.target.value)}
                     id="outlined-basic"
                     label="Введите почту пользователя"
                     variant="outlined"
@@ -31,7 +34,6 @@ export function searchUser(stateButton: boolean, func: React.Dispatch<React.SetS
                     </Paper>
                 </Button>
             </Box>
-            {stateButton && responseUser()}
         </>
     )
 }

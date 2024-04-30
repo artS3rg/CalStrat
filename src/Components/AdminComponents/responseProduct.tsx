@@ -1,6 +1,7 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
+import { ProductAdmin } from "../../Pages/AdminPanel";
 
-export function responseProduct() {
+export function responseProduct(data: ProductAdmin) {
     return (
         <>
             <Box
@@ -13,14 +14,14 @@ export function responseProduct() {
                 autoComplete="off"
             >
                 <div>
-                    <TextField
+                    <TextField value={data?.Id}
                         id="outlined-read-only-input"
                         label="Id"
                         InputProps={{
                             readOnly: true,
                         }}
                     />
-                    <TextField
+                    <TextField value={data?.Name}
                         id="outlined-read-only-input"
                         label="Name"
                         InputProps={{
@@ -29,19 +30,19 @@ export function responseProduct() {
                     />
                 </div>
                 <div>
-                    <TextField
+                    <TextField value={data?.Kcal}
                         id="outlined-required"
                         label="Kcal / 100g"
                     />
-                    <TextField
+                    <TextField value={data?.Proteins}
                         id="outlined-required"
                         label="Proteins / 100g"
                     />
-                    <TextField
+                    <TextField value={data?.Fats}
                         id="outlined-required"
                         label="Fats / 100g"
                     />
-                    <TextField
+                    <TextField value={data?.Carbohydrates}
                         id="outlined-required"
                         label="Carbohydrates / 100g"
                     />
