@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { jwtDecode } from 'jwt-decode'
-import { useNavigate } from "react-router-dom";
 
 export interface UserState {
   Id : number
@@ -13,6 +12,8 @@ export interface UserState {
   IdActivity : number
   KcalPerDay : number
   RoleId : number
+  GenderId : number
+  Height : number
 }
 
 const initialState: UserState = {
@@ -25,7 +26,9 @@ const initialState: UserState = {
   AimWeight : 0,
   IdActivity : 0,
   KcalPerDay : 0,
-  RoleId : 0
+  RoleId : 0,
+  GenderId : 0,
+  Height : 0
 }
 
 export const userSlice = createSlice({
@@ -44,6 +47,8 @@ export const userSlice = createSlice({
       state.IdActivity = jwt_data.IdActivity
       state.KcalPerDay = jwt_data.KcalPerDay
       state.RoleId = jwt_data.RoleId
+      state.GenderId = jwt_data.GenderId
+      state.Height = jwt_data.Height
     },
 
     logout: (state) => {

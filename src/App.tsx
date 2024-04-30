@@ -4,15 +4,12 @@ import { AccessDeniedPage } from './Pages/AccessDeniedPage';
 import { ProfilePage } from './Pages/ProfilePage';
 import { AdminPanel } from './Pages/AdminPanel';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './Components/Redux/hooks';
-import { UserState, login } from './Components/Redux/user';
-import { RootState } from './Components/Redux/store';
+import { useAppDispatch } from './Components/Redux/hooks';
+import { login } from './Components/Redux/user';
 
 function App() {
 
   const dispatch = useAppDispatch()
-
-  const selector : UserState = useAppSelector((state: RootState) => state.user)
 
   useEffect(() => {
     if(sessionStorage.getItem("jwt") != null && sessionStorage.getItem("jwt") != undefined){
@@ -24,10 +21,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin" element={(selector.RoleId == 0) ? <AccessDeniedPage /> : <AdminPanel />} />
-        <Route path="/" element={(selector.Email == "") ? <Navigate to="/home" /> : <Navigate to="/profile" />} />
-        <Route path="/home" element={(selector.Email == "") ? <HomePage /> : <Navigate to="/profile" />}/>
-        <Route path="/profile" element={(selector.Email == "") ? <Navigate to="/home" /> : <ProfilePage />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/access" element={<AccessDeniedPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
       </Routes>
     </BrowserRouter>
   )

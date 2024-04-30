@@ -152,7 +152,7 @@ export default function UserCard() {
                         <p className="item_info">Пол</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{gender}</p> :
+                                <p className="item_info_value">{genders[selector.GenderId]}</p> :
                                 <TextField
                                     select
                                     size="small"

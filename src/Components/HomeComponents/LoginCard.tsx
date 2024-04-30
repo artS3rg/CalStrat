@@ -21,7 +21,7 @@ export function LoginCard() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        let req : string = "https://localhost:7294/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
+        let req : string = "https://localhost:7225/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
         fetch(req)
             .then(
                 response => {
@@ -94,7 +94,7 @@ export function LoginCard() {
                         fontWeight: 300,
                     }
                 }}
-                variant="standard" placeholder='Почта' margin="dense" fullWidth required/>
+                variant="standard" placeholder='Логин' margin="dense" fullWidth required/>
                 <TextField onChange={(e) => setStatePass(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
