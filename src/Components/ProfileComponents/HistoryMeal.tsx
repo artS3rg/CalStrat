@@ -1,15 +1,18 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import HMTable from "./HMTable";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export default function HistoryMeal(){
-    
-    return(
+export default function HistoryMeal() {
+
+    return (
         <Box sx={{
             width: 800,
             marginTop: 5,
             marginLeft: "auto",
             marginRight: "auto",
-            
+
         }}>
             <Typography align="center" sx={{
                 fontFamily: 'Russo One',
@@ -17,17 +20,16 @@ export default function HistoryMeal(){
                 fontSize: 20,
                 margin: 2,
             }}>Иcтория приемов пищи</Typography>
-            
+
             <Box sx={{
                 borderRadius: 5,
                 backgroundColor: "white",
                 padding: 2,
 
             }}>
-            
-                <Typography align="center" paddingBottom={2} sx={{fontFamily: 'Russo One', fontSize: 20}}>
-                    12.12.12 /сделать выбор даты
-                </Typography>
+
+                <div>
+                </div>
 
                 <Grid container sx={{
                     backgroundColor: '#e8e8e8',
@@ -56,7 +58,7 @@ export default function HistoryMeal(){
                 <HMTable></HMTable>
             </Box>
 
-        
+
         </Box>
     )
 }

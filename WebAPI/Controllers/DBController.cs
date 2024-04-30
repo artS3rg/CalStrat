@@ -424,11 +424,8 @@ namespace WebAPI.Controllers
                     new Claim("Height", target.Height.ToString())
                 };
                 var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
                     claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)));
                 var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
                 target.AToken = AToken;
                 _db.SaveChanges();
@@ -448,6 +445,63 @@ namespace WebAPI.Controllers
             if(targets != null)
             {
                 return Results.Json(targets);
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
+        //Поиск продуктов по названию (для админ панели)
+        [HttpGet("SearchProductAdmin")]
+        public IResult SearchProductAdmin(string product)
+        {
+            Product? target = _db.Products.FirstOrDefault(p => p.Name == product);
+            if (target != null)
+            {
+                return Results.Json(target);
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
+        //Поиск пользователя по почте (админ)
+        [HttpGet("SearchUserAdmin")]
+        public IResult SearchUserAdmin(string email)
+        {
+            User? target = _db.Users.FirstOrDefault(p => p.Email == email);
+            if(target != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", target.Id.ToString()),
+                    new Claim("Email", target.Email),
+                    new Claim("Nickname", target.Nickname),
+                    new Claim("RoleId", target.RoleId.ToString())
+                };
+                var jwt = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30))
+                );
+                var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+                return Results.Ok(AToken);
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
+        //Получение заявки (админ)
+        [HttpGet("GetRequest")]
+        public IResult GetRequest()
+        {
+            Entities.Request? target = _db.Requests.FirstOrDefault(p => p.Status == false);
+            if(target != null)
+            {
+                return Results.Json(target);
             }
             else
             {

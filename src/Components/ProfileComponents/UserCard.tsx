@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { UserState, logout } from "../Redux/user";
 import { Navigate, useNavigate } from 'react-router-dom';
 import { RootState } from "../Redux/store";
+import { KcalFormula } from "../../Scripts/KcalFormula";
 
 
 const theme = createTheme({
@@ -23,7 +24,7 @@ export default function UserCard() {
 
     const dispatch = useAppDispatch()
 
-    const selector : UserState = useAppSelector((state: RootState) => state.user)
+    const selector: UserState = useAppSelector((state: RootState) => state.user)
 
     const navigate = useNavigate()
 
@@ -87,7 +88,7 @@ export default function UserCard() {
                         }}
                     >{editState.value}</Button>
 
-                    <Button variant="contained" onClick={() => {dispatch(logout()); navigate("/")}}
+                    <Button variant="contained" onClick={() => { dispatch(logout()); navigate("/") }}
                         sx={{
                             width: 120,
                             ml: 'auto',
@@ -103,7 +104,7 @@ export default function UserCard() {
             <ThemeProvider theme={theme}>
                 <Grid item xs={4} >
                     <Typography marginLeft={2}>
-                        <p className="item_info">Логин</p>
+                        <p className="item_info">Имя</p>
                         <p>{
                             editState.state === false ?
                                 <p className="item_info_value">{selector.Nickname}</p> :
@@ -116,25 +117,15 @@ export default function UserCard() {
                                 />
                         }</p>
 
-                        <p className="item_info">Пароль</p>
-                        <p className="item_info_value">{
+                        <p className="item_info">Возраст</p>
+                        <p>{
                             editState.state === false ?
-                                <p className="item_info_value">...</p> :
+                                <p className="item_info_value">{19}</p> :
                                 <TextField
-
-                                    type={eye ? "text" : "password"}
+                                    type="email"
                                     size="small"
-                                    defaultValue={password}
-                                    onChange={(event) => setPassword(event.target.value)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton onClick={handleEye}>
-                                                    {eye ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        )
-                                    }}
+                                    defaultValue={email}
+                                    onChange={(event) => setEmail(event.target.value)}
                                 />
                         }</p>
 
@@ -167,7 +158,8 @@ export default function UserCard() {
 
                         <p className="item_info">Энергетическая норма</p>
                         <p>{
-                            <p className="item_info_value">{kkal}</p>
+                            <p className="item_info_value">{KcalFormula(selector.CurWeight, selector.Height, 19,
+                                activities[selector.IdActivity], genders[selector.GenderId], purposes[selector.IdAim])}</p>
                         }</p>
                     </Typography>
                 </Grid>
@@ -220,6 +212,19 @@ export default function UserCard() {
                         <p>{
                             editState.state === false ?
                                 <p className="item_info_value">{selector.AimWeight}</p> :
+                                <TextField
+                                    type="number"
+                                    color="primary"
+                                    size="small"
+                                    defaultValue={purposeWeight}
+                                    onChange={(event) => setPurposeWeight(Number(event.target.value))}
+                                />
+                        }</p>
+
+                        <p className="item_info">Рост</p>
+                        <p>{
+                            editState.state === false ?
+                                <p className="item_info_value">{selector.Height}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
