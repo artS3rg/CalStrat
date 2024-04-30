@@ -421,7 +421,8 @@ namespace WebAPI.Controllers
                     new Claim("KcalPerDay", target.KcalPerDay.ToString()),
                     new Claim("RoleId", target.RoleId.ToString()),
                     new Claim("GenderId", target.GenderId.ToString()),
-                    new Claim("Height", target.Height.ToString())
+                    new Claim("Height", target.Height.ToString()),
+                    new Claim("Age", target.Age.ToString()),
                 };
                 var jwt = new JwtSecurityToken(
                     claims: claims,

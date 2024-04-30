@@ -21,7 +21,7 @@ export function LoginCard() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        let req : string = "https://localhost:7225/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
+        let req : string = "https://localhost:7129/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
         fetch(req)
             .then(
                 response => {

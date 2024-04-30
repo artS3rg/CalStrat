@@ -120,7 +120,7 @@ export default function UserCard() {
                         <p className="item_info">Возраст</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{19}</p> :
+                                <p className="item_info_value">{selector.Age}</p> :
                                 <TextField
                                     type="email"
                                     size="small"

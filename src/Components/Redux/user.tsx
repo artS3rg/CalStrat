@@ -14,6 +14,7 @@ export interface UserState {
   RoleId : number
   GenderId : number
   Height : number
+  Age : number
 }
 
 const initialState: UserState = {
@@ -28,7 +29,8 @@ const initialState: UserState = {
   KcalPerDay : 0,
   RoleId : 0,
   GenderId : 0,
-  Height : 0
+  Height : 0,
+  Age : 0
 }
 
 export const userSlice = createSlice({
@@ -49,6 +51,7 @@ export const userSlice = createSlice({
       state.RoleId = jwt_data.RoleId
       state.GenderId = jwt_data.GenderId
       state.Height = jwt_data.Height
+      state.Age = jwt_data.Age
     },
 
     logout: (state) => {
