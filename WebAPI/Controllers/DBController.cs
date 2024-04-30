@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using WebAPI.Entities;
 using WebAPI;
+using System.Runtime.InteropServices;
 
 namespace WebAPI.Controllers
 {
@@ -436,6 +437,21 @@ namespace WebAPI.Controllers
             else
             {
                 return Results.NotFound("fack");
+            }
+        }
+
+        //Поиск продуктов по названию
+        [HttpGet("SearchProduct")]
+        public IResult SearchProduct(string product)
+        {
+            Product[]? targets = _db.Products.Where(p => p.Name.Contains(product)).ToArray();
+            if(targets != null)
+            {
+                return Results.Json(targets);
+            }
+            else
+            {
+                return Results.NotFound();
             }
         }
     }
