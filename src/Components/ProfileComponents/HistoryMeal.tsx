@@ -1,8 +1,5 @@
 import { Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import HMTable from "./HMTable";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function HistoryMeal() {
 
@@ -12,7 +9,7 @@ export default function HistoryMeal() {
             marginTop: 5,
             marginLeft: "auto",
             marginRight: "auto",
-
+            mb: 10
         }}>
             <Typography align="center" sx={{
                 fontFamily: 'Russo One',
