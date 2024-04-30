@@ -16,7 +16,8 @@ const theme = createTheme({
 });
 
 const genders = ["Муж", "Жен"];
-const purposes = ["Снижение веса", "Поддерживание веса", "Набор веса"];
+const purposes = ["Снижение веса", "Набор веса", "Поддерживание веса"];
+const activities = ["Очень низкая", "Низкая", "Средняя", "Высокая", "Очень высокая"];
 
 export default function UserCard() {
 
