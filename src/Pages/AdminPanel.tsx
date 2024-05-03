@@ -35,9 +35,7 @@ export interface Req {
 export function AdminPanel() {
     const [stateUserButton, setStateUserButton] = useState<boolean>(false);
     const [stateProductButton, setStateProductButton] = useState<boolean>(false);
-
     const [stateRequestButton, setStateRequestButton] = useState<boolean>(false);
-
     const [stateResponseUserButton, setStateResponseUserButton] = useState<boolean>(false);
     const [stateResponseProductButton, setStateResponseProductButton] = useState<boolean>(false);
 
@@ -49,12 +47,26 @@ export function AdminPanel() {
 
     const [req, setReq] = useState<Req>();
 
+    const [confirmReq, setConfirmReq] = useState<boolean>(false)
+    const [confirmProd, setConfirmProd] = useState<boolean>(false)
+    const [confirmUser, setConfirmUser] = useState<boolean>(false)
+
     useEffect(() => {
         if (stateRequestButton == true) {
             setStateUserButton(false);
             setStateProductButton(false);
             setStateResponseUserButton(false);
             setStateResponseProductButton(false);
+
+            setEmail("")
+            setProduct("")
+
+            setConfirmReq(false)
+            setConfirmUser(false)
+            setConfirmProd(false)
+
+            setUserAdmin(undefined)
+            setProductAdmin(undefined)
         }
     }, [stateRequestButton])
 
@@ -64,6 +76,16 @@ export function AdminPanel() {
             setStateRequestButton(false);
             setStateResponseUserButton(false);
             setStateResponseProductButton(false);
+
+            setEmail("")
+            setProduct("")
+
+            setConfirmReq(false)
+            setConfirmUser(false)
+            setConfirmProd(false)
+
+            setReq(undefined)
+            setProductAdmin(undefined)
         }
     }, [stateUserButton])
 
@@ -73,6 +95,16 @@ export function AdminPanel() {
             setStateRequestButton(false);
             setStateResponseUserButton(false);
             setStateResponseProductButton(false);
+
+            setEmail("")
+            setProduct("")
+
+            setConfirmReq(false)
+            setConfirmUser(false)
+            setConfirmProd(false)
+
+            setUserAdmin(undefined)
+            setReq(undefined)
         }
     }, [stateProductButton])
 
@@ -135,6 +167,50 @@ export function AdminPanel() {
                 }
             )
     }, [stateRequestButton])
+
+    useEffect(() => {
+        let request : string = "https://localhost:7129/DB/ChangeRequestStatus?id=" + req?.Id;
+        fetch(request)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                }
+            )
+        setStateRequestButton(false)
+        setReq(undefined)
+    }, [confirmReq])
+
+    useEffect(() => {
+        let request : string = "https://localhost:7129/DB/ChangeProduct?id=" + productAdmin?.Id + "&kcal=" + productAdmin?.Kcal +
+        "&prot=" + productAdmin?.Proteins + "&fats=" + productAdmin?.Fats + "&carb=" + productAdmin?.Carbohydrates;
+        fetch(request)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                }
+            )
+        setStateProductButton(false)
+        setStateResponseProductButton(false)
+    }, [confirmProd])
+
+    useEffect(() => {
+        let request : string = "https://localhost:7129/DB/ChangeUser?id=" + userAdmin?.Id + "&nick=" + 
+        userAdmin?.Nickname + "&email=" + userAdmin?.Email;
+        fetch(request)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                }
+            )
+        setStateUserButton(false)
+        setStateResponseUserButton(false)
+    }, [confirmUser])
 
     return (
         <div style={{
@@ -208,9 +284,9 @@ export function AdminPanel() {
 
                 {stateUserButton && searchUser(stateResponseUserButton, setStateResponseUserButton, setEmail)}
                 {stateProductButton && searchProduct(stateResponseProductButton, setStateResponseProductButton, setProduct)}
-                {stateRequestButton && responseRequest(req!)}
-                {stateResponseUserButton && responseUser(userAdmin!)}
-                {stateResponseProductButton && responseProduct(productAdmin!)}
+                {stateRequestButton && responseRequest(req!, confirmReq, setConfirmReq)}
+                {stateResponseUserButton && responseUser(userAdmin!, confirmUser, setConfirmUser)}
+                {stateResponseProductButton && responseProduct(productAdmin!, confirmProd, setConfirmProd)}
             </Stack>
         </div>
     )

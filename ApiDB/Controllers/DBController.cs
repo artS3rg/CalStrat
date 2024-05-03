@@ -537,6 +537,68 @@ namespace ApiDB.Controllers
             }
         }
 
+        //Изменение заявки
+        [HttpGet("ChangeRequestStatus")]
+        public IResult PutRequest(int id)
+        {
+            Request? target = _db.Requests.FirstOrDefault(p => p.Id == id);
+            if(target != null)
+            {
+                Product newProduct = new Product();
+                newProduct.Name = target.Name;
+                newProduct.Kcal = target.Kcal;
+                newProduct.Proteins = target.Proteins;
+                newProduct.Fats = target.Fats;
+                newProduct.Carbohydrates = target.Carbohydrates;
+                _db.Products.Add(newProduct);
+                target.Status = true;
+                _db.SaveChanges();
+                return Results.Ok(newProduct);
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
+        //Изменение продукта
+        [HttpGet("ChangeProduct")]
+        public IResult PutProduct(int id, int kcal, int prot, int fats, int carb)
+        {
+            Product? target = _db.Products.FirstOrDefault(p => p.Id == id);
+            if(target != null)
+            {
+                target.Kcal = kcal;
+                target.Proteins = prot;
+                target.Fats = fats;
+                target.Carbohydrates = carb;
+                _db.SaveChanges();
+                return Results.Ok(target);
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
+        //Изменение пользователя
+        [HttpGet("ChangeUser")]
+        public IResult PutUser(int id, string nick, string email)
+        {
+            User? target = _db.Users.FirstOrDefault(p => p.Id == id);
+            if(target != null)
+            {
+                target.Nickname = nick;
+                target.Email = email;
+                _db.SaveChanges();
+                return Results.Ok();
+            }
+            else
+            {
+                return Results.NotFound();
+            }
+        }
+
         //Рега
         [HttpPost("Registration")]
         public IResult Registration(string email, string pass, string nick) 
@@ -552,35 +614,11 @@ namespace ApiDB.Controllers
                 AimWeight = 0,
                 IdActivity = 0,
                 KcalPerDay = 0,
-                RoleId = 0,
-                GenderId = 0,
-                Height = 0,
-                Age = 0
+                RoleId = 0
             };
-            var claims = new List<Claim>
-                {
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("Email", user.Email),
-                    new Claim("Nickname", user.Nickname),
-                    new Claim("IdAim", user.IdAim.ToString()),
-                    new Claim("InitWeight", user.InitWeight.ToString()),
-                    new Claim("CurWeight", user.CurWeight.ToString()),
-                    new Claim("AimWeight", user.AimWeight.ToString()),
-                    new Claim("IdActivity", user.IdActivity.ToString()),
-                    new Claim("KcalPerDay", user.KcalPerDay.ToString()),
-                    new Claim("RoleId", user.RoleId.ToString()),
-                    new Claim("GenderId", user.GenderId.ToString()),
-                    new Claim("Height", user.Height.ToString()),
-                    new Claim("Age", user.Age.ToString())
-                };
-            var jwt = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)));
-            var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
-            user.AToken = AToken;
             _db.Users.Add(user);
             _db.SaveChanges();
-            return Results.Ok(AToken);
+            return Results.Ok(user);
         }
     }
 }

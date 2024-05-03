@@ -35,7 +35,7 @@
 }
 
 .page_user{
-    background-image: url("src/Assets/background1.png");
+    background-image: url("src/Assets/background.png");
     background-attachment: fixed;
     background-size: 100%;
 }
@@ -79,7 +79,6 @@
 }
 
 .item_info_value{
-    margin: 5px;
     font-family: "Sarala";
     font-weight: 500;
 }

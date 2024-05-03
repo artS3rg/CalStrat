@@ -32,6 +32,7 @@ export default function UserCard() {
     const [password, setPassword] = React.useState("asdfgh");
     const [email, setEmail] = React.useState("example@mail.ru");
     const [gender, setGender] = React.useState("жен");
+    const [kkal, setKkal] = React.useState(2500);
     const [purpose, setPurpose] = React.useState("снижение веса");
     const [startWeight, setStartWeight] = React.useState(65);
     const [currentWeight, setCurrentWeight] = React.useState(65);
@@ -111,7 +112,7 @@ export default function UserCard() {
                                     type="text"
                                     color="primary"
                                     size="small"
-                                    defaultValue={selector.Nickname}
+                                    defaultValue={login}
                                     onChange={(event) => setLogin(event.target.value)}
                                 />
                         }</p>
@@ -121,9 +122,9 @@ export default function UserCard() {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.Age}</p> :
                                 <TextField
-                                    type="number"
+                                    type="email"
                                     size="small"
-                                    defaultValue={selector.Age}
+                                    defaultValue={email}
                                     onChange={(event) => setEmail(event.target.value)}
                                 />
                         }</p>
@@ -135,7 +136,7 @@ export default function UserCard() {
                                 <TextField
                                     type="email"
                                     size="small"
-                                    defaultValue={selector.Email}
+                                    defaultValue={email}
                                     onChange={(event) => setEmail(event.target.value)}
                                 />
                         }</p>
@@ -147,7 +148,7 @@ export default function UserCard() {
                                 <TextField
                                     select
                                     size="small"
-                                    defaultValue={genders[selector.GenderId]}
+                                    defaultValue={gender}
                                     onChange={(event) => setGender(event.target.value)}>
                                     {genders.map((option) => (
                                         <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -173,7 +174,7 @@ export default function UserCard() {
                                     select
                                     color="primary"
                                     size="small"
-                                    defaultValue={purposes[selector.IdAim]}
+                                    defaultValue={purpose}
                                     onChange={(event) => setPurpose(event.target.value)}
                                 >
                                     {purposes.map((option) => (
@@ -190,7 +191,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
-                                    defaultValue={selector.InitWeight}
+                                    defaultValue={startWeight}
                                     onChange={(event) => setStartWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -202,7 +203,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
-                                    defaultValue={selector.CurWeight}
+                                    defaultValue={currentWeight}
                                     onChange={(event) => setCurrentWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -215,7 +216,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
-                                    defaultValue={selector.AimWeight}
+                                    defaultValue={purposeWeight}
                                     onChange={(event) => setPurposeWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -228,7 +229,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
-                                    defaultValue={selector.Height}
+                                    defaultValue={purposeWeight}
                                     onChange={(event) => setPurposeWeight(Number(event.target.value))}
                                 />
                         }</p>

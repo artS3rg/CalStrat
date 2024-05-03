@@ -14,7 +14,7 @@ export default function Header() {
                   display: { xs: 'none', md: 'flex' },
                   fontFamily: 'Yuji Mai, serif',
                   fontWeight: 400,
-                  letterSpacing: '.7rem',
+                  letterSpacing: '.3rem',
                   color: 'white',
                   fontSize: 25,
                 }}

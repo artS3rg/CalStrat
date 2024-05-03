@@ -1,7 +1,7 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
 import { ProductAdmin } from "../../Pages/AdminPanel";
 
-export function responseProduct(data: ProductAdmin) {
+export function responseProduct(data: ProductAdmin, state: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
     return (
         <>
             <Box
@@ -30,26 +30,26 @@ export function responseProduct(data: ProductAdmin) {
                     />
                 </div>
                 <div>
-                    <TextField value={data?.Kcal}
-                        id="outlined-required"
+                    <TextField defaultValue={data?.Kcal} onChange={(e) => data.Kcal = e.target.value}
+                        id="outlined-basic"
                         label="Kcal / 100g"
                     />
-                    <TextField value={data?.Proteins}
+                    <TextField defaultValue={data?.Proteins} onChange={(e) => data.Proteins = e.target.value}
                         id="outlined-required"
                         label="Proteins / 100g"
                     />
-                    <TextField value={data?.Fats}
+                    <TextField defaultValue={data?.Fats} onChange={(e) => data.Fats = e.target.value}
                         id="outlined-required"
                         label="Fats / 100g"
                     />
-                    <TextField value={data?.Carbohydrates}
+                    <TextField defaultValue={data?.Carbohydrates} onChange={(e) => data.Carbohydrates = e.target.value}
                         id="outlined-required"
                         label="Carbohydrates / 100g"
                     />
                 </div>
             </Box>
             <Box sx={{ 'textAlign': 'center' }}>
-                <Button>
+                <Button onClick={() => func(!state)}>
                     <Paper
                         sx={{
                             color: "white",

@@ -1,7 +1,25 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
 import { Req } from "../../Pages/AdminPanel";
+import { useEffect, useState } from "react";
 
-export function responseRequest(req: Req) {
+export function responseRequest(req: Req, state: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
+
+    /*
+    const [confirmState, setConfirmState] = useState<boolean>(false)
+
+    useEffect(() => {
+        let request : string = "https://localhost:7129/DB/ChangeRequestStatus?id=" + req.Id;
+        fetch(request)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка');
+                    }
+                }
+            )
+    }, [confirmState])
+    */
+
     return (
         <>
             <Box
@@ -63,7 +81,7 @@ export function responseRequest(req: Req) {
                 </div>
             </Box>
             <Box sx={{ 'textAlign': 'center' }}>
-                <Button>
+                <Button onClick={() => func(!state)}>
                     <Paper
                         sx={{
                             color: "white",

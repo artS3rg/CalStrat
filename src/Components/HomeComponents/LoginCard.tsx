@@ -11,10 +11,8 @@ export function LoginCard() {
     const btnstyle={margin:'8px 0'}
     const [stateForm, setStateForm] = useState<boolean>(true)
 
-    const [stateLogin, setStateLogin] = useState<string>() //статус полей
-    const [stateEmail, setStateEmail] = useState<string>()
+    const [stateLogin, setStateLogin] = useState<string>()
     const [statePass, setStatePass] = useState<string>()
-    const [stateConfPass, setStateConfPass] = useState<string>()
 
     const [stateAuth, setStateAuth] = useState<boolean>(false)
 
@@ -23,10 +21,8 @@ export function LoginCard() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        let reqLog : string = "https://localhost:7129/DB/CheckUser?login=" + stateEmail + "&pass=" + statePass;
-        let reqReg : string = "https://localhost:7129/DB/Registration?email=" + stateEmail + "&pass=" + statePass + "&nick=" + stateLogin;
-        let req : string = stateForm ? reqLog : reqReg;
-        fetch(req, { method: stateForm ? "GET" : "POST" })
+        let req : string = "https://localhost:7129/DB/CheckUser?login=" + stateLogin + "&pass=" + statePass;
+        fetch(req)
             .then(
                 response => {
                     if (!response.ok) {
@@ -38,7 +34,18 @@ export function LoginCard() {
             )
             .then(
                 data => {
-                    console.log("Дошло")
+                    /*
+                    sessionStorage.setItem("id", String(jwt_data.Id))
+                    sessionStorage.setItem("email", String(jwt_data.Email))
+                    sessionStorage.setItem("nickname", String(jwt_data.Nickname))
+                    sessionStorage.setItem("idAim", String(jwt_data.IdAim))
+                    sessionStorage.setItem("InitWeight", String(jwt_data.InitWeight))
+                    sessionStorage.setItem("CurWeight", String(jwt_data.CurWeight))
+                    sessionStorage.setItem("AimWeight", String(jwt_data.AimWeight))
+                    sessionStorage.setItem("IdActivity", String(jwt_data.IdActivity))
+                    sessionStorage.setItem("KcalPerDay", String(jwt_data.KcalPerDay))
+                    sessionStorage.setItem("RoleId", String(jwt_data.RoleId))
+                    */
                     sessionStorage.setItem("jwt", data)
                     dispatch(login(data))
                     navigate("/profile")
@@ -71,7 +78,7 @@ export function LoginCard() {
                 sx={{ color: "#FFFFFF", fontFamily: "Roboto" }} textAlign="center">
                     <h2 className="roboto-bold">Авторизация</h2>
                 </Grid>
-                <TextField onChange={(e) => setStateEmail(e.target.value)}
+                <TextField onChange={(e) => setStateLogin(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -87,7 +94,7 @@ export function LoginCard() {
                         fontWeight: 300,
                     }
                 }}
-                variant="standard" placeholder='Почта' margin="dense" fullWidth required/>
+                variant="standard" placeholder='Логин' margin="dense" fullWidth required/>
                 <TextField onChange={(e) => setStatePass(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -122,7 +129,6 @@ export function LoginCard() {
                     <h2 className="roboto-bold">Регистрация</h2>
                 </Grid>
                 <TextField
-                onChange={(e) => setStateLogin(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -140,7 +146,6 @@ export function LoginCard() {
                 }}
                 variant="standard" placeholder='Логин' margin="dense" fullWidth required/>
                 <TextField
-                onChange={(e) => setStateEmail(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -157,9 +162,8 @@ export function LoginCard() {
                     }
                 }}
                 className="roboto-medium"
-                variant="standard" placeholder='Почта' margin="dense" fullWidth required/>
+                variant="standard" placeholder='Почта' margin="dense" type="email" fullWidth required/>
                 <TextField
-                onChange={(e) => setStatePass(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -177,7 +181,6 @@ export function LoginCard() {
                 }}
                 variant="standard" placeholder='Пароль' margin="dense" type='password' fullWidth required/>
                 <TextField 
-                onChange={(e) => setStateConfPass(e.target.value)}
                 sx={{
                     backgroundColor: "rgba(0, 0, 0, 0.6)",
                     borderRadius: 2,
@@ -194,7 +197,7 @@ export function LoginCard() {
                     }
                 }}  
                 variant="standard" placeholder='Подтверждение пароля' margin="dense" type='password' fullWidth required/>
-                <Button onClick={() => {if (statePass == stateConfPass && statePass != null) setStateAuth(true)}}
+                <Button
                 sx={{
                     backgroundColor: "#902B2B",
                     "&:hover": { backgroundColor: "#902B2B" }

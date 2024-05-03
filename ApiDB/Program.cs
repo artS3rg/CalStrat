@@ -9,7 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors(option => option.AddPolicy(
     name: "Default",
-    builder => builder.AllowAnyOrigin()));
+    builder => builder.AllowAnyOrigin().AllowAnyMethod()
+    ));
 
 builder.Services.AddDbContext<KcalPlannerDbContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

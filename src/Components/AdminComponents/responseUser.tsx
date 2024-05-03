@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { UserAdmin } from "../../Pages/AdminPanel";
 
-export function responseUser(data: UserAdmin) {
+export function responseUser(data: UserAdmin, state: boolean, func: React.Dispatch<React.SetStateAction<boolean>>) {
     return (
         <>
             <Box
@@ -17,32 +17,23 @@ export function responseUser(data: UserAdmin) {
             >
                 <div>
                     <TextField value={data?.Id}
-                        id="outlined-read-only-input"
+                        id="outlined-required"
                         label="Id"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
-                    <TextField value={data?.Email}
-                        id="outlined-read-only-input"
+                    <TextField defaultValue={data?.Email} onChange={(e) => data.Email = e.target.value}
+                        id="outlined-required"
                         label="Email"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
                 </div>
                 <div>
-                    <TextField value={data?.Nickname}
-                        id="outlined-read-only-input"
+                    <TextField defaultValue={data?.Nickname} onChange={(e) => data.Nickname = e.target.value}
+                        id="outlined-required"
                         label="Nickname"
-                        InputProps={{
-                            readOnly: true,
-                        }}
                     />
                 </div>
             </Box>
             <Box sx={{ 'textAlign': 'center' }}>
-                <Button>
+                <Button onClick={() => func(!state)}>
                     <Paper
                         sx={{
                             color: "white",

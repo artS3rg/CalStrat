@@ -35,10 +35,6 @@ export default function HMTable() {
     rows[rowInd][colName] = value;
   };
 
-  const handleSelectNewProduct = () => {
-
-  }
-
   const handleExit = () => {
     setRowIndex(-1);
     setColumnIndex(-1);
@@ -204,7 +200,6 @@ export default function HMTable() {
           </TableContainer>
         </Paper>
       </ClickAwayListener>
-
       <Grid container>
         <Grid item xs={8}>
             <p style={{ fontFamily: 'Russo One', color: '#8F2323', fontSize: 20, marginLeft: 5}}>Сегодня вы выполнили норму!</p>
@@ -220,13 +215,11 @@ export default function HMTable() {
             marginTop: 1,
             borderRadius: 2,
             }}
-            onClick={() => {handleSelectNewProduct()}}>
+            onClick={() => {handlecreateNewRow()}}>
             Добавить
           </Button>
         </Grid>
       </Grid>
-
-      
     </Box>
   );
 }
