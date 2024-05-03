@@ -1,7 +1,13 @@
 import { Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import HMTable from "./HMTable";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import dayjs, { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import React from "react";
 
 export default function HistoryMeal() {
+
+    const [date, setDate] = React.useState<Dayjs | null>(dayjs());
 
     return (
         <Box sx={{
@@ -25,8 +31,21 @@ export default function HistoryMeal() {
 
             }}>
 
-                <div>
-                </div>
+                <Box sx={{
+                    textAlign: "center"
+                    }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            label="Дата"
+                            value={date}
+                            format="DD/MM/YYYY"
+                            onChange={(newValue) => setDate(newValue)}
+                            sx={{
+                                marginTop: 1,
+                                marginBottom: 2
+                            }} />
+                    </LocalizationProvider>
+                </Box>
 
                 <Grid container sx={{
                     backgroundColor: '#e8e8e8',
