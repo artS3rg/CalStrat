@@ -228,3 +228,14 @@ C:\Users\ArtSe\Desktop\CalStrat\ApiDB\obj\Debug\net8.0\refint\ApiDB.dll
 C:\Users\ArtSe\Desktop\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.pdb
 C:\Users\ArtSe\Desktop\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.genruntimeconfig.cache
 C:\Users\ArtSe\Desktop\CalStrat\ApiDB\obj\Debug\net8.0\ref\ApiDB.dll
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.csproj.AssemblyReference.cache
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.AssemblyInfoInputs.cache
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.AssemblyInfo.cs
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.csproj.CoreCompileInputs.cache
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.sourcelink.json
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.dll
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\refint\ApiDB.dll
+C:\Users\Darisha\Documents\ВУЗ\КР\2\CalStrat\ApiDB\obj\Debug\net8.0\ApiDB.pdb

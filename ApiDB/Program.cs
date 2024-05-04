@@ -15,7 +15,21 @@ builder.Services.AddCors(option => option.AddPolicy(
 builder.Services.AddDbContext<KcalPlannerDbContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
+    // serialize DateOnly as strings
+    x.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+});
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.MapType<DateOnly>(() => new OpenApiSchema
+    {
+        Type = "string",
+        Format = "date"
+    });
+});
 
 var app = builder.Build();
 
