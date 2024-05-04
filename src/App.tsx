@@ -4,12 +4,15 @@ import { AccessDeniedPage } from './Pages/AccessDeniedPage';
 import { ProfilePage } from './Pages/ProfilePage';
 import { AdminPanel } from './Pages/AdminPanel';
 import { useEffect } from 'react';
-import { useAppDispatch } from './Components/Redux/hooks';
+import { useAppDispatch, useAppSelector } from './Components/Redux/hooks';
 import { login } from './Components/Redux/user';
+import { RootState } from './Components/Redux/store';
 
 function App() {
 
   const dispatch = useAppDispatch()
+
+  const selector = useAppSelector((state : RootState) => state.user)
 
   useEffect(() => {
     if(sessionStorage.getItem("jwt") != null && sessionStorage.getItem("jwt") != undefined){
@@ -24,8 +27,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/access" element={<AccessDeniedPage />} />
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin" element={selector.RoleId == 1 ? <AdminPanel /> : <AccessDeniedPage />} />
       </Routes>
     </BrowserRouter>
   )
