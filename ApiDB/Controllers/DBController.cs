@@ -583,15 +583,43 @@ namespace ApiDB.Controllers
 
         //Изменение пользователя
         [HttpGet("ChangeUser")]
-        public IResult PutUser(int id, string nick, string email)
+        public IResult PutUser(int id, string nick, string email, int idAim, double initWeight, double curWeight, double aimWeight, int genderId, int height, int age)
         {
             User? target = _db.Users.FirstOrDefault(p => p.Id == id);
             if(target != null)
             {
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", id.ToString()),
+                    new Claim("Email", email),
+                    new Claim("Nickname", nick),
+                    new Claim("IdAim", idAim.ToString()),
+                    new Claim("InitWeight", initWeight.ToString()),
+                    new Claim("CurWeight", curWeight.ToString()),
+                    new Claim("AimWeight", aimWeight.ToString()),
+                    new Claim("IdActivity", target.IdActivity.ToString()),
+                    new Claim("KcalPerDay", target.KcalPerDay.ToString()),
+                    new Claim("RoleId", target.RoleId.ToString()),
+                    new Claim("GenderId", genderId.ToString()),
+                    new Claim("Height", height.ToString()),
+                    new Claim("Age", age.ToString())
+                };
+                var jwt = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)));
+                var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
                 target.Nickname = nick;
                 target.Email = email;
+                target.IdAim = idAim;
+                target.InitWeight = initWeight;
+                target.CurWeight = curWeight;
+                target.AimWeight = aimWeight;
+                target.GenderId = genderId;
+                target.Height = height;
+                target.Age = age;
+                target.AToken = AToken;
                 _db.SaveChanges();
-                return Results.Ok();
+                return Results.Ok(AToken);
             }
             else
             {
@@ -614,11 +642,35 @@ namespace ApiDB.Controllers
                 AimWeight = 0,
                 IdActivity = 0,
                 KcalPerDay = 0,
-                RoleId = 0
+                RoleId = 0,
+                GenderId = 0,
+                Height = 0,
+                Age = 0
             };
+            var claims = new List<Claim>
+            {
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Email", user.Email),
+                new Claim("Nickname", user.Nickname),
+                new Claim("IdAim", user.IdAim.ToString()),
+                new Claim("InitWeight", user.InitWeight.ToString()),
+                new Claim("CurWeight", user.CurWeight.ToString()),
+                new Claim("AimWeight", user.AimWeight.ToString()),
+                new Claim("IdActivity", user.IdActivity.ToString()),
+                new Claim("KcalPerDay", user.KcalPerDay.ToString()),
+                new Claim("RoleId", user.RoleId.ToString()),
+                new Claim("GenderId", user.GenderId.ToString()),
+                new Claim("Height", user.Height.ToString()),
+                new Claim("Age", user.Age.ToString())
+            };
+            var jwt = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)));
+            var AToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+            user.AToken = AToken;
             _db.Users.Add(user);
             _db.SaveChanges();
-            return Results.Ok(user);
+            return Results.Ok(AToken);
         }
     }
 }

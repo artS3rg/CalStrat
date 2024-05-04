@@ -1,11 +1,11 @@
 import { Avatar, Button, Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, ThemeProvider, Typography, createTheme, } from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import '/src/Styles/Text.css';
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
-import { UserState, logout } from "../Redux/user";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { UserState, login, logout } from "../Redux/user";
+import { useNavigate } from 'react-router-dom';
 import { RootState } from "../Redux/store";
 import { KcalFormula } from "../../Scripts/KcalFormula";
 
@@ -28,22 +28,50 @@ export default function UserCard() {
 
     const navigate = useNavigate()
 
-    const [login, setLogin] = React.useState("dasha");
-    const [password, setPassword] = React.useState("asdfgh");
-    const [email, setEmail] = React.useState("example@mail.ru");
-    const [gender, setGender] = React.useState("жен");
-    const [kkal, setKkal] = React.useState(2500);
-    const [purpose, setPurpose] = React.useState("снижение веса");
-    const [startWeight, setStartWeight] = React.useState(65);
-    const [currentWeight, setCurrentWeight] = React.useState(65);
-    const [purposeWeight, setPurposeWeight] = React.useState(55);
+    const [loginState, setLogin] = useState(selector.Nickname);
+    const [email, setEmail] = useState(selector.Email);
+    const [gender, setGender] = useState(genders[selector.GenderId]);
+    const [kkal, setKkal] = useState(2500);
+    const [purpose, setPurpose] = useState(purposes[selector.IdAim]);
+    const [startWeight, setStartWeight] = useState(selector.InitWeight);
+    const [currentWeight, setCurrentWeight] = useState(selector.CurWeight);
+    const [purposeWeight, setPurposeWeight] = useState(selector.AimWeight);
+    const [age, setAge] = useState(selector.Age);
+    const [height, setHeight] = useState(selector.Height);
 
-    const [eye, setEye] = React.useState(false);
+    const [eye, setEye] = useState(false);
     const handleEye = () => {
         setEye(!eye);
-    }
+    } 
 
-    const [editState, setEditState] = React.useState<{ state: boolean, value: string }>({ state: false, value: "Изменить" });
+    const [editState, setEditState] = useState<{ state: boolean, value: string }>({ state: false, value: "Изменить" });
+
+    useEffect(() => {
+        let req : string = "https://localhost:7129/DB/ChangeUser?id="+selector.Id+"&nick="+loginState+"&email="+email+"&idAim="+purposes.indexOf(purpose)+"&initWeight="+startWeight+"&curWeight="+currentWeight+"&aimWeight="+purposeWeight+"&genderId="+genders.indexOf(gender)+"&height="+height+"&age="+age
+        if (editState.state == false){
+            fetch(req)
+            .then(
+                response => {
+                    if (!response.ok) {
+                        sessionStorage.clear();
+                        throw new Error('Неверные данные');
+                    }
+                    return response.json()
+                }
+            )
+            .then(
+                data => {
+                    console.log("Дошло")
+                    sessionStorage.setItem("jwt", data)
+                    dispatch(login(data))
+                    navigate("/profile")
+                }
+            )
+            .catch(error => {
+                console.error('Произошла ошибка при выполнении запроса:', error);
+            });
+        }
+    }, [editState])
 
     return (
         <Grid container sx={{
@@ -107,12 +135,12 @@ export default function UserCard() {
                         <p className="item_info">Имя</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.Nickname}</p> :
+                                <p className="item_info_value">{loginState}</p> :
                                 <TextField
                                     type="text"
                                     color="primary"
                                     size="small"
-                                    defaultValue={login}
+                                    defaultValue={loginState}
                                     onChange={(event) => setLogin(event.target.value)}
                                 />
                         }</p>
@@ -120,19 +148,19 @@ export default function UserCard() {
                         <p className="item_info">Возраст</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.Age}</p> :
+                                <p className="item_info_value">{age}</p> :
                                 <TextField
-                                    type="email"
+                                    type="number"
                                     size="small"
-                                    defaultValue={email}
-                                    onChange={(event) => setEmail(event.target.value)}
+                                    defaultValue={age}
+                                    onChange={(event) => setAge(Number(event.target.value))}
                                 />
                         }</p>
 
                         <p className="item_info">Почта</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.Email}</p> :
+                                <p className="item_info_value">{email}</p> :
                                 <TextField
                                     type="email"
                                     size="small"
@@ -144,7 +172,7 @@ export default function UserCard() {
                         <p className="item_info">Пол</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{genders[selector.GenderId]}</p> :
+                                <p className="item_info_value">{gender}</p> :
                                 <TextField
                                     select
                                     size="small"
@@ -169,7 +197,7 @@ export default function UserCard() {
                         <p className="item_info">Цель</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{purposes[selector.IdAim]}</p> :
+                                <p className="item_info_value">{purpose}</p> :
                                 <TextField
                                     select
                                     color="primary"
@@ -186,7 +214,7 @@ export default function UserCard() {
                         <p className="item_info">Начальный вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.InitWeight}</p> :
+                                <p className="item_info_value">{startWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
@@ -198,7 +226,7 @@ export default function UserCard() {
                         <p className="item_info">Текущий вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.CurWeight}</p> :
+                                <p className="item_info_value">{currentWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
@@ -211,7 +239,7 @@ export default function UserCard() {
                         <p className="item_info">Целевой вес, кг</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.AimWeight}</p> :
+                                <p className="item_info_value">{purposeWeight}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
@@ -224,13 +252,13 @@ export default function UserCard() {
                         <p className="item_info">Рост</p>
                         <p>{
                             editState.state === false ?
-                                <p className="item_info_value">{selector.Height}</p> :
+                                <p className="item_info_value">{height}</p> :
                                 <TextField
                                     type="number"
                                     color="primary"
                                     size="small"
                                     defaultValue={purposeWeight}
-                                    onChange={(event) => setPurposeWeight(Number(event.target.value))}
+                                    onChange={(event) => setHeight(Number(event.target.value))}
                                 />
                         }</p>
                     </Typography>
