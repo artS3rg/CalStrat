@@ -251,6 +251,22 @@
   },
   {
     "ContainingType": "ApiDB.Controllers.DBController",
+    "Method": "GetNameProduct",
+    "RelativePath": "DB/GetNameProduct",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ApiDB.Controllers.DBController",
     "Method": "SelectUserProducts",
     "RelativePath": "DB/GetProduct",
     "HttpMethod": "GET",

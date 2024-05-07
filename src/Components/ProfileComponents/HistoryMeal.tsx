@@ -10,6 +10,7 @@ import Card from '@mui/material/Card';
 
 interface Food{
     id: string
+    name: string
     productId: string
     sum: string
     kcal: string
@@ -96,7 +97,27 @@ export default function HistoryMeal() {
             }
         )
         .then(
-            json => {
+            async json => {
+                let prs : Food[] = json
+                {for(let p of prs){
+                    await fetch('https://localhost:7129/DB/GetNameProduct?id=' + p.productId)
+                    .then(
+                        response => {
+                            if (!response.ok) {
+                                throw new Error('Ошибка получения названия');
+                            }
+                            let res = response.json()
+                            return res
+                        }
+                    )
+                    .then(
+                        json => {
+                            console.log(json)
+                            p.name = json
+                        }
+                    )
+                }}
+                
                 setProducts(json)
                 console.log(products)
             }
@@ -220,7 +241,7 @@ export default function HistoryMeal() {
                                             placeholder={row.productId}
                                             defaultValue={products[index]["productId"]}
                                             onChange={(event) => handleTextFieldChange(index, "productId", event.target.value)}
-                                        /> : row.productId
+                                        /> : row.name
                                     }
                                     </TableCell>
                                     <TableCell>

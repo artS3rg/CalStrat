@@ -45,6 +45,16 @@ namespace ApiDB.Controllers
             return Results.Json(result);
         }
 
+        //получение названия продукта по id
+        [HttpGet("GetNameProduct")]
+        public IResult GetNameProduct(int id)
+        {
+            Product product = _db.Products.FirstOrDefault(p =>  p.Id == id);
+            if (product == null) 
+                return Results.NotFound("Продукта не существует");
+            return Results.Json(product.Name);
+        }
+
         //Добавление цели
         [HttpPost("PostAim")]
         public IResult AddAim(Aim newAim)
