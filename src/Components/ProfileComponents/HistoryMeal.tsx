@@ -34,6 +34,8 @@ export default function HistoryMeal() {
     const [stateProductChange, setStateProductChange] = React.useState<{id: string, state: boolean, value: string}>({id: "0", state: false, value: "Изменить"});
 
     const [stateButtonAdd, setStateButtonAdd] = React.useState<boolean>(false)
+    const [stateSum, setStateSum] = React.useState<number>(0)
+    const [stateButtonSum, setStateButtonSum] = React.useState<{state: boolean, idProduct: string}>()
 
     const handleTextFieldChange = (rowInd: number, colName: "productId" | "sum" | "kcal" | "proteins" | "fats" | "carbohydrates", value: string) => {
         products[rowInd][colName] = value;
@@ -64,8 +66,19 @@ export default function HistoryMeal() {
         setUpdate(!update)
     }
 
-    const addProduct = (product : Food) => {
-        
+    const handleAddProduct = async (userId: number, productId: string, sum: number) => {
+        const response = fetch('https://localhost:7129/DB/AddUserProduct?userID=' + userId +'&productId=' + productId + '&sum=' + sum, {
+            method: 'POST'
+        })
+        if (!(await response).ok) {
+            console.log("Ошибка запроса добавления продукта")   
+        }
+        else {
+            console.log(response)
+        }
+        setUpdate(!update)
+        setStateButtonSum({state: false, idProduct: "0"})
+        setStateSum(0)
     }
 
     useEffect (() => {
@@ -300,22 +313,9 @@ export default function HistoryMeal() {
                         marginTop: 1,
                         borderRadius: 2,
                         }}
-                        onClick={() => setStateButtonAdd(true)}
+                        onClick={() => {setStateButtonAdd(!stateButtonAdd), setSearchProductsList([])}}
                         >
                         Добавить прием пищи
-                    </Button>
-
-                    <Button variant="contained" sx={{
-                        backgroundColor: '#902B2B', 
-                        fontFamily: 'Russo One',
-                        fontSize: 16,
-                        "&:hover": { backgroundColor: "#902B2B", },
-                        marginTop: 1,
-                        borderRadius: 2,
-                        float: "right"
-                        }}
-                        >
-                        Сохранить
                     </Button>
 
                     <Grid>
@@ -361,10 +361,40 @@ export default function HistoryMeal() {
                                                         borderRadius: 2,
                                                         float: "right"
                                                         }}
-                                                        onClick={() => addProduct(product)}
+                                                        onClick={() => handleAddProduct(selector.Id, product.id, stateSum)}
                                                         >
                                                         Добавить
                                                     </Button>
+                                                </Stack>
+                                                <Typography>На 100 г продукта:</Typography>
+                                                <Stack direction="row">
+                                                    <Typography sx={{ marginRight: 1}}>Ккал:</Typography>
+                                                    <Typography sx={{ marginRight: 2}}>{product.kcal}</Typography>
+                                                    <Typography sx={{ marginRight: 1}}>Белки:</Typography>
+                                                    <Typography sx={{ marginRight: 2}}>{product.proteins}</Typography>
+                                                    <Typography sx={{ marginRight: 1}}>Жиры:</Typography>
+                                                    <Typography sx={{ marginRight: 2}}>{product.fats}</Typography>
+                                                    <Typography sx={{ marginRight: 1}}>Углеводы:</Typography>
+                                                    <Typography sx={{ marginRight: 2}}>{product.carbohydrates}</Typography>
+                                                </Stack>
+                                                <Stack direction="row">
+                                                    <Typography sx={{marginRight: 2}}>Укажите количество грамм:</Typography>
+                                                    {
+                                                        stateButtonSum?.state == true && stateButtonSum.idProduct == product.id ? 
+                                                        <TextField 
+                                                        variant="standard" 
+                                                        type="number" 
+                                                        size="small" 
+                                                        onChange={(e) => setStateSum(Number(e.target.value))}></TextField>
+                                                        : <Button variant="contained" sx = {{
+                                                            backgroundColor: '#A9A9A9', 
+                                                            fontFamily: 'Russo One',
+                                                            fontSize: 10,
+                                                            "&:hover": { backgroundColor: "#902B2B", },
+                                                            }} 
+                                                            onClick={() => {setStateButtonSum({state: true, idProduct: product.id})}}>Указать</Button>
+                                                    }
+                                                    
                                                 </Stack>
                                                 
                                             </Card>

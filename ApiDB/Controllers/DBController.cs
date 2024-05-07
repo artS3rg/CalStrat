@@ -358,11 +358,15 @@ namespace ApiDB.Controllers
 
         //Добавление продукта пользователя
         [HttpPost("AddUserProduct")]
-        public IResult AddUserProduct(int userID, Product product, int sum)
+        public IResult AddUserProduct(int userID, int productId, int sum)
         {
             User? target = _db.Users.FirstOrDefault(p => p.Id == userID);
             if (target != null)
             {
+                Product? product = _db.Products.FirstOrDefault(p => p.Id == productId);
+
+                if (product == null) return Results.NotFound(new { message = "Продукта не существует" });
+
                 UserProduct userProduct = new UserProduct();
                 userProduct.User = target;
                 userProduct.Product = product;

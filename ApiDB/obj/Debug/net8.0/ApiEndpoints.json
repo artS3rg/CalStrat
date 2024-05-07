@@ -13,9 +13,9 @@
         "IsRequired": false
       },
       {
-        "Name": "product",
-        "Type": "ApiDB.Entities.Product",
-        "IsRequired": true
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": false
       },
       {
         "Name": "sum",
