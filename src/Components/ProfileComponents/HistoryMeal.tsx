@@ -19,17 +19,19 @@ interface Food{
     date: string
     userId: string
 }
+
 export default function HistoryMeal() {
 
-    const [date, setDate] = React.useState<Dayjs | null>(dayjs())
+    const [date, setDate] = React.useState<Dayjs | null>()
     const selector: UserState = useAppSelector((state: RootState) => state.user)
     const [products, setProducts] = React.useState<Food[]>([])
+
+    const [update, setUpdate] = React.useState<boolean>(false)
 
     const [searchProductValue, setSearchProductValue] = React.useState<string>()
     const [searchProductsList, setSearchProductsList] = React.useState<any[]>([])
 
-    const [rowIndex, setRowIndex] = React.useState(-1);
-    const [columnIndex, setColumnIndex] = React.useState(-1);
+    const [stateProductChange, setStateProductChange] = React.useState<{id: string, state: boolean, value: string}>({id: "0", state: false, value: "Изменить"});
 
     const [stateButtonAdd, setStateButtonAdd] = React.useState<boolean>(false)
 
@@ -37,9 +39,29 @@ export default function HistoryMeal() {
         products[rowInd][colName] = value;
     };
 
-    const handleExit = () => {
-        setRowIndex(-1);
-        setColumnIndex(-1);
+    const handleChangeProduct = (Id: string, ) => {
+        if (stateProductChange.state == false) {
+            setStateProductChange({id: Id, state: true, value: "Сохранить"})
+        }
+        else{
+            setStateProductChange({id: "0", state: false, value: "Изменить"})
+        }
+
+        setUpdate(!update)
+        
+    }
+
+    const handleDeleteProduct = async (Id: string) => {
+        const response = await fetch('https://localhost:7129/DB/DelUserProduct?ProductId=' + Id, {
+            method: 'DELETE'
+        })
+        if (!response.ok) {
+            console.log("Ошибка запроса удаления продукта")
+        }
+        else {
+            console.log(response)
+        }
+        setUpdate(!update)
     }
 
     const addProduct = (product : Food) => {
@@ -66,7 +88,7 @@ export default function HistoryMeal() {
                 console.log(products)
             }
         )
-      }, [date])
+      }, [update])
 
     const searchProduct = () => {
         console.log(searchProductValue)
@@ -91,7 +113,7 @@ export default function HistoryMeal() {
 
     return (
         <Box sx={{
-            width: 800,
+            width: 850,
             marginTop: 5,
             marginLeft: "auto",
             marginRight: "auto",
@@ -119,7 +141,7 @@ export default function HistoryMeal() {
                             label="Дата"
                             value={date}
                             format="DD/MM/YYYY"
-                            onChange={(newValue) => setDate(newValue)}
+                            onChange={(newValue) => {setDate(newValue), setUpdate(!update)}}
                             sx={{
                                 marginTop: 1,
                                 marginBottom: 2
@@ -153,7 +175,6 @@ export default function HistoryMeal() {
                 </Grid>
 
                 <Box>
-                    <ClickAwayListener onClickAway={() => handleExit()}>
                         <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 5, marginBottom: 2}}>
                         <TableContainer
                             component={Paper}
@@ -172,123 +193,92 @@ export default function HistoryMeal() {
                                 <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Белки</TableCell>
                                 <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Жиры</TableCell>
                                 <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Углеводы</TableCell>
+                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Изменить</TableCell>
                                 <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Удалить</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {products.map((row, index) => (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(0); }}
-                                    >
+                                <TableRow hover role="checkbox">
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 0 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.productId}
                                             defaultValue={products[index]["productId"]}
                                             onChange={(event) => handleTextFieldChange(index, "productId", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.productId
                                     }
                                     </TableCell>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(1); }}
-                                    >
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 1 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.sum}
                                             defaultValue={products[index]["sum"]}
                                             onChange={(event) => handleTextFieldChange(index, "sum", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.sum
                                     }
                                     </TableCell>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(2); }}
-                                    >
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 2 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.kcal}
                                             defaultValue={products[index]["kcal"]}
                                             onChange={(event) => handleTextFieldChange(index, "kcal", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.kcal
                                     }
                                     </TableCell>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(3); }}
-                                    >
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 3 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.proteins}
                                             defaultValue={products[index]["proteins"]}
                                             onChange={(event) => handleTextFieldChange(index, "proteins", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.proteins
                                     }
                                     </TableCell>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(4); }}
-                                    >
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 4 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.fats}
                                             defaultValue={products[index]["fats"]}
                                             onChange={(event) => handleTextFieldChange(index, "fats", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.fats
                                     }
                                     </TableCell>
-                                    <TableCell
-                                    onClick={() => { setRowIndex(index); setColumnIndex(5); }}
-                                    >
+                                    <TableCell>
                                     {
-                                        rowIndex === index && columnIndex === 5 ?
+                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
                                         <TextField
                                             placeholder={row.carbohydrates}
                                             defaultValue={products[index]["carbohydrates"]}
                                             onChange={(event) => handleTextFieldChange(index, "carbohydrates", event.target.value)}
-                                            onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleExit();
-                                            }
-                                            }}
                                         /> : row.carbohydrates
                                     }
+                                    </TableCell>
+
+                                    <TableCell>
+                                    <Button variant="contained" sx = {{
+                                        backgroundColor: '#A9A9A9', 
+                                        fontFamily: 'Russo One',
+                                        fontSize: 10,
+                                        "&:hover": { backgroundColor: "#902B2B", },
+                                    }} 
+                                        onClick={() => {handleChangeProduct(row.id)}}>{stateProductChange.id == row.id ? stateProductChange?.value : "Изменить" }</Button>
                                     </TableCell>
                                     
                                     <TableCell>
                                     <Button variant="contained" sx = {{
                                         backgroundColor: '#A9A9A9', 
                                         fontFamily: 'Russo One',
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         "&:hover": { backgroundColor: "#902B2B", },
                                     }} 
-                                        onClick={() => { products.splice(index, 1); setProducts([...products]); }}>Удалить</Button>
+                                        onClick={() => { handleDeleteProduct(row.id)}}>Удалить</Button>
                                     </TableCell>
 
                                 </TableRow>
@@ -297,7 +287,6 @@ export default function HistoryMeal() {
                             </Table>
                         </TableContainer>
                         </Paper>
-                    </ClickAwayListener>
                    
                 </Box>
 

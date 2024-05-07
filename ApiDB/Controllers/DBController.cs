@@ -385,14 +385,14 @@ namespace ApiDB.Controllers
 
         //Удаление продукта пользователя
         [HttpDelete("DelUserProduct")]
-        public IResult RemoveUserProduct(UserProduct product)
+        public IResult RemoveUserProduct(int ProductId)
         {
-            User? target = _db.Users.FirstOrDefault(p => p.Id == product.UserId);
+            UserProduct? target = _db.UserProducts.FirstOrDefault(p => p.Id == ProductId);
             if (target != null)
             {
-                _db.UserProducts.Remove(product);
+                _db.UserProducts.Remove(target);
                 _db.SaveChanges();
-                return Results.Json(product);
+                return Results.Json(target);
             }
             else
             {
