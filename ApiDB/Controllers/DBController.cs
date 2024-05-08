@@ -378,8 +378,8 @@ namespace ApiDB.Controllers
                 if (product == null) return Results.NotFound(new { message = "Продукта не существует" });
 
                 UserProduct userProduct = new UserProduct();
-                userProduct.User = target;
-                userProduct.Product = product;
+                userProduct.ProductId = productId;
+                userProduct.UserId = userID;
                 userProduct.Sum = sum;
                 int k = sum / 100;
                 userProduct.Kcal = product.Kcal * k;

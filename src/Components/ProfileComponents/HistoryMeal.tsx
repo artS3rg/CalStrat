@@ -1,4 +1,4 @@
-import { Box, Button, ClickAwayListener, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, Button, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -32,26 +32,27 @@ export default function HistoryMeal() {
     const [searchProductValue, setSearchProductValue] = React.useState<string>()
     const [searchProductsList, setSearchProductsList] = React.useState<any[]>([])
 
-    const [stateProductChange, setStateProductChange] = React.useState<{id: string, state: boolean, value: string}>({id: "0", state: false, value: "Изменить"});
-
     const [stateButtonAdd, setStateButtonAdd] = React.useState<boolean>(false)
     const [stateSum, setStateSum] = React.useState<number>(0)
     const [stateButtonSum, setStateButtonSum] = React.useState<{state: boolean, idProduct: string}>()
 
-    const handleTextFieldChange = (rowInd: number, colName: "productId" | "sum" | "kcal" | "proteins" | "fats" | "carbohydrates", value: string) => {
-        products[rowInd][colName] = value;
-    };
+    const [KPFC, setKPFC] = React.useState<{kcal: number, proteins: number, fats: number, cars: number}>()
 
-    const handleChangeProduct = (Id: string, ) => {
-        if (stateProductChange.state == false) {
-            setStateProductChange({id: Id, state: true, value: "Сохранить"})
-        }
-        else{
-            setStateProductChange({id: "0", state: false, value: "Изменить"})
+    const handleKPFC = (products: Food[]) => {
+        let kc = 0
+        let pr = 0
+        let fat = 0
+        let carb = 0
+
+        for(let p of products)
+        {
+            kc = kc + Number(p.kcal)
+            pr = pr + Number(p.proteins)
+            fat = fat + Number(p.fats)
+            carb = carb + Number(p.carbohydrates)
         }
 
-        setUpdate(!update)
-        
+        setKPFC({kcal: kc, proteins: pr, fats: fat, cars: carb})
     }
 
     const handleDeleteProduct = async (Id: string) => {
@@ -82,46 +83,37 @@ export default function HistoryMeal() {
         setStateSum(0)
     }
 
-    useEffect (() => {
+    const getNames = async (prs: Food[]) => {
+        {for(let p of prs){
+            const response = await fetch('https://localhost:7129/DB/GetNameProduct?id=' + p.productId)
+            const data = await response.json()
+            p.name = data;
+            console.log(p.name)
+        }}
+    } 
+
+    const getData = async () => {
         let d = date?.format('YYYY-MM-DD')
         console.log(d)
-        fetch('https://localhost:7129/DB/GetProduct?userID=' + selector.Id + '&date=' + d )
-        .then(
-            response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка');
-                }
-                let res = response.json()
-                console.log(res)
-                return res
-            }
-        )
-        .then(
-            async json => {
-                let prs : Food[] = json
-                {for(let p of prs){
-                    await fetch('https://localhost:7129/DB/GetNameProduct?id=' + p.productId)
-                    .then(
-                        response => {
-                            if (!response.ok) {
-                                throw new Error('Ошибка получения названия');
-                            }
-                            let res = response.json()
-                            return res
-                        }
-                    )
-                    .then(
-                        json => {
-                            console.log(json)
-                            p.name = json
-                        }
-                    )
-                }}
-                
-                setProducts(json)
-                console.log(products)
-            }
-        )
+
+        const response = await fetch('https://localhost:7129/DB/GetProduct?userID=' + selector.Id + '&date=' + d )
+        const json = await response.json()
+        console.log('json', json)
+
+        let prs : Food[] = json
+        await getNames(prs)
+        console.log('prsAfter: ', prs)
+
+        setProducts(prs)
+        console.log('products', products)
+        
+        handleKPFC(products)
+        console.log(KPFC)
+
+    }
+
+    useEffect (() => {
+        getData()
       }, [update])
 
     const searchProduct = () => {
@@ -192,120 +184,54 @@ export default function HistoryMeal() {
                 }}>
                     <Grid item xs={3} textAlign={'center'}>
                         <p className="HMName">Ккал</p>
-                        <p>0</p>
+                        <p>{KPFC?.kcal}</p>
                     </Grid>
                     <Grid item xs={3} textAlign={'center'}>
                         <p className="HMName">Белки</p>
-                        <p>0</p>
+                        <p>{KPFC?.proteins}</p>
                     </Grid>
                     <Grid item xs={3} textAlign={'center'}>
                         <p className="HMName">Жиры</p>
-                        <p>0</p>
+                        <p>{KPFC?.fats}</p>
                     </Grid>
                     <Grid item xs={3} textAlign={'center'}>
                         <p className="HMName">Углеводы</p>
-                        <p>0</p>
+                        <p>{KPFC?.cars}</p>
                     </Grid>
                 </Grid>
 
                 <Box>
-                        <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 5, marginBottom: 2}}>
-                        <TableContainer
-                            component={Paper}
-                            sx={{
-                            maxHeight: 300, 
-                            borderRadius: 5,
-                            backgroundColor: '#e8e8e8'
-                            }}
-                            >
-                            <Table stickyHeader aria-label="sticky table" >
-                            <TableHead>
-                                <TableRow>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Продукт</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Грамм</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Ккал</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Белки</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Жиры</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Углеводы</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Изменить</TableCell>
-                                <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Удалить</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {products.map((row, index) => (
-                                <TableRow hover role="checkbox">
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.productId}
-                                            defaultValue={products[index]["productId"]}
-                                            onChange={(event) => handleTextFieldChange(index, "productId", event.target.value)}
-                                        /> : row.name
-                                    }
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.sum}
-                                            defaultValue={products[index]["sum"]}
-                                            onChange={(event) => handleTextFieldChange(index, "sum", event.target.value)}
-                                        /> : row.sum
-                                    }
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.kcal}
-                                            defaultValue={products[index]["kcal"]}
-                                            onChange={(event) => handleTextFieldChange(index, "kcal", event.target.value)}
-                                        /> : row.kcal
-                                    }
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.proteins}
-                                            defaultValue={products[index]["proteins"]}
-                                            onChange={(event) => handleTextFieldChange(index, "proteins", event.target.value)}
-                                        /> : row.proteins
-                                    }
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.fats}
-                                            defaultValue={products[index]["fats"]}
-                                            onChange={(event) => handleTextFieldChange(index, "fats", event.target.value)}
-                                        /> : row.fats
-                                    }
-                                    </TableCell>
-                                    <TableCell>
-                                    {
-                                        stateProductChange?.state == true && stateProductChange?.id == row.id ?
-                                        <TextField
-                                            placeholder={row.carbohydrates}
-                                            defaultValue={products[index]["carbohydrates"]}
-                                            onChange={(event) => handleTextFieldChange(index, "carbohydrates", event.target.value)}
-                                        /> : row.carbohydrates
-                                    }
-                                    </TableCell>
-
-                                    <TableCell>
-                                    <Button variant="contained" sx = {{
-                                        backgroundColor: '#A9A9A9', 
-                                        fontFamily: 'Russo One',
-                                        fontSize: 10,
-                                        "&:hover": { backgroundColor: "#902B2B", },
-                                    }} 
-                                        onClick={() => {handleChangeProduct(row.id)}}>{stateProductChange.id == row.id ? stateProductChange?.value : "Изменить" }</Button>
-                                    </TableCell>
-                                    
-                                    <TableCell>
+                    <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: 5, marginBottom: 2}}>
+                    <TableContainer
+                        component={Paper}
+                        sx={{
+                        maxHeight: 300, 
+                        borderRadius: 5,
+                        backgroundColor: '#e8e8e8'
+                        }}
+                        >
+                        <Table stickyHeader aria-label="sticky table" >
+                        <TableHead>
+                            <TableRow>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Продукт</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Грамм</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Ккал</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Белки</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Жиры</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Углеводы</TableCell>
+                            <TableCell sx={{fontFamily: 'Russo One', fontSize: 16, backgroundColor: '#e8e8e8'}}>Удалить</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {products.map((row) => (
+                            <TableRow hover role="checkbox">
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.sum}</TableCell>
+                                <TableCell>{row.kcal}</TableCell>
+                                <TableCell>{row.proteins}</TableCell>
+                                <TableCell>{row.fats}</TableCell>
+                                <TableCell>{row.carbohydrates}</TableCell>
+                                <TableCell>
                                     <Button variant="contained" sx = {{
                                         backgroundColor: '#A9A9A9', 
                                         fontFamily: 'Russo One',
@@ -313,14 +239,13 @@ export default function HistoryMeal() {
                                         "&:hover": { backgroundColor: "#902B2B", },
                                     }} 
                                         onClick={() => { handleDeleteProduct(row.id)}}>Удалить</Button>
-                                    </TableCell>
-
-                                </TableRow>
-                                ))}
-                            </TableBody>
-                            </Table>
-                        </TableContainer>
-                        </Paper>
+                                </TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </TableContainer>
+                    </Paper>
                    
                 </Box>
 
