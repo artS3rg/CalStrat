@@ -3,6 +3,7 @@ import Header from "../Components/Header";
 import UserCard from "../Components/ProfileComponents/UserCard";
 import HistoryMeal from "../Components/ProfileComponents/HistoryMeal";
 import { Footer } from "../Components/Footer";
+import { useEffect } from "react";
 
 export function ProfilePage() {
     return (

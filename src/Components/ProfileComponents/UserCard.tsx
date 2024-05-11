@@ -53,7 +53,6 @@ export default function UserCard() {
             .then(
                 response => {
                     if (!response.ok) {
-                        sessionStorage.clear();
                         throw new Error('Неверные данные');
                     }
                     return response.json()
