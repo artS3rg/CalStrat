@@ -597,7 +597,7 @@ namespace ApiDB.Controllers
 
         //Изменение пользователя
         [HttpGet("ChangeUser")]
-        public IResult PutUser(int id, string nick, string email, int idAim, double initWeight, double curWeight, double aimWeight, int genderId, int height, int age)
+        public IResult PutUser(int id, string nick, string email, int idAim, double initWeight, double curWeight, double aimWeight, int genderId, int height, int age, int idActivity)
         {
             User? target = _db.Users.FirstOrDefault(p => p.Id == id);
             if(target != null)
@@ -611,7 +611,7 @@ namespace ApiDB.Controllers
                     new Claim("InitWeight", initWeight.ToString()),
                     new Claim("CurWeight", curWeight.ToString()),
                     new Claim("AimWeight", aimWeight.ToString()),
-                    new Claim("IdActivity", target.IdActivity.ToString()),
+                    new Claim("IdActivity", idActivity.ToString()),
                     new Claim("KcalPerDay", target.KcalPerDay.ToString()),
                     new Claim("RoleId", target.RoleId.ToString()),
                     new Claim("GenderId", genderId.ToString()),
@@ -632,6 +632,7 @@ namespace ApiDB.Controllers
                 target.Height = height;
                 target.Age = age;
                 target.AToken = AToken;
+                target.IdActivity = idActivity;
                 _db.SaveChanges();
                 return Results.Ok(AToken);
             }

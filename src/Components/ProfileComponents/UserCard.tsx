@@ -33,6 +33,7 @@ export default function UserCard() {
     const [gender, setGender] = useState(genders[selector.GenderId]);
     const [kkal, setKkal] = useState(2500);
     const [purpose, setPurpose] = useState(purposes[selector.IdAim]);
+    const [activity, setActivity] = useState(activities[selector.IdActivity]);
     const [startWeight, setStartWeight] = useState(selector.InitWeight);
     const [currentWeight, setCurrentWeight] = useState(selector.CurWeight);
     const [purposeWeight, setPurposeWeight] = useState(selector.AimWeight);
@@ -55,12 +56,13 @@ export default function UserCard() {
     const [editState, setEditState] = useState<{ state: boolean, value: string }>({ state: false, value: "Изменить" });
 
     useEffect(() => {
-        let req: string = "https://localhost:7129/DB/ChangeUser?id=" + selector.Id + "&nick=" + loginState + "&email=" + email + "&idAim=" + purposes.indexOf(purpose) + "&initWeight=" + startWeight + "&curWeight=" + currentWeight + "&aimWeight=" + purposeWeight + "&genderId=" + genders.indexOf(gender) + "&height=" + height + "&age=" + age
+        let req: string = "https://localhost:7129/DB/ChangeUser?id=" + selector.Id + "&nick=" + loginState + "&email=" + email + "&idAim=" + purposes.indexOf(purpose) + "&initWeight=" + startWeight + "&curWeight=" + currentWeight + "&aimWeight=" + purposeWeight + "&genderId=" + genders.indexOf(gender) + "&height=" + height + "&age=" + age + "&idActivity=" + activities.indexOf(activity)
         if (editState.state == false) {
             fetch(req)
                 .then(
                     response => {
                         if (!response.ok) {
+                            console.log(req)
                             throw new Error('Неверные данные');
                         }
                         return response.json()
@@ -112,13 +114,7 @@ export default function UserCard() {
                                 setEditState({ state: true, value: "Сохранить" })
                             else {
                                 /* сделать проверку логина */
-                                if (email.includes('@')) {
-                                    setEditState({ state: false, value: "Изменить" })
-                                }
-                                else {
-                                    alert("Email введён не корретно!")
-                                }
-
+                                setEditState({ state: false, value: "Изменить" })
                             }
 
                         }}
@@ -170,8 +166,8 @@ export default function UserCard() {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.Email}</p> :
                                 <TextField
-                                    type="email"
                                     size="small"
+                                    type="email"
                                     defaultValue={selector.Email}
                                     onChange={(event) => setEmail(event.target.value)}
                                 />
@@ -218,7 +214,22 @@ export default function UserCard() {
                                     ))}
                                 </TextField>
                         }</p>
-
+                        <p className="item_info">Активность</p>
+                        <p>{
+                            editState.state === false ?
+                                <p className="item_info_value">{activities[selector.IdActivity]}</p> :
+                                <TextField
+                                    select
+                                    color="primary"
+                                    size="small"
+                                    defaultValue={activities[selector.IdActivity]}
+                                    onChange={(event) => setActivity(event.target.value)}
+                                >
+                                    {activities.map((option) => (
+                                        <MenuItem key={option} value={option}>{option}</MenuItem>
+                                    ))}
+                                </TextField>
+                        }</p>
                         <p className="item_info">Начальный вес, кг</p>
                         <p>{
                             editState.state === false ?
