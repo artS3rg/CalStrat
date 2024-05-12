@@ -148,6 +148,7 @@ export default function UserCard() {
                                     type="text"
                                     color="primary"
                                     size="small"
+                                    defaultValue={selector.Nickname}
                                     onChange={(event) => setLogin(event.target.value)}
                                 />
                         }</p>
@@ -159,6 +160,7 @@ export default function UserCard() {
                                 <TextField
                                     type="number"
                                     size="small"
+                                    defaultValue={selector.Age}
                                     onChange={(event) => setAge(Number(event.target.value))}
                                 />
                         }</p>
@@ -170,6 +172,7 @@ export default function UserCard() {
                                 <TextField
                                     type="email"
                                     size="small"
+                                    defaultValue={selector.Email}
                                     onChange={(event) => setEmail(event.target.value)}
                                 />
                         }</p>
@@ -181,6 +184,7 @@ export default function UserCard() {
                                 <TextField
                                     select
                                     size="small"
+                                    defaultValue={genders[selector.GenderId]}
                                     onChange={(event) => setGender(event.target.value)}>
                                     {genders.map((option) => (
                                         <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -206,6 +210,7 @@ export default function UserCard() {
                                     select
                                     color="primary"
                                     size="small"
+                                    defaultValue={purposes[selector.IdAim]}
                                     onChange={(event) => setPurpose(event.target.value)}
                                 >
                                     {purposes.map((option) => (
@@ -222,6 +227,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
+                                    defaultValue={selector.InitWeight}
                                     onChange={(event) => setStartWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -233,6 +239,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
+                                    defaultValue={selector.CurWeight}
                                     onChange={(event) => setCurrentWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -245,6 +252,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
+                                    defaultValue={selector.AimWeight}
                                     onChange={(event) => setPurposeWeight(Number(event.target.value))}
                                 />
                         }</p>
@@ -257,6 +265,7 @@ export default function UserCard() {
                                     type="number"
                                     color="primary"
                                     size="small"
+                                    defaultValue={selector.Height}
                                     onChange={(event) => setHeight(Number(event.target.value))}
                                 />
                         }</p>
