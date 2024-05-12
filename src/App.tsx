@@ -10,16 +10,8 @@ import { RootState } from './Components/Redux/store';
 
 function App() {
 
-  const dispatch = useAppDispatch()
-
   const selector = useAppSelector((state : RootState) => state.user)
 
-  useEffect(() => {
-    if(sessionStorage.getItem("jwt") != null && sessionStorage.getItem("jwt") != undefined){
-      let data : string = sessionStorage.getItem("jwt")!
-      dispatch(login(data))
-    }
-  }, [])
 
   return (
     <BrowserRouter>
