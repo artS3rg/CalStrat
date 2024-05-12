@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ArtSe\\Desktop\\CalStrat\\ApiDB\\ApiDB.csproj": {}
+    "C:\\Users\\yuram\\OneDrive\\Рабочий стол\\Курсовая\\CalStrat\\ApiDB\\ApiDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ArtSe\\Desktop\\CalStrat\\ApiDB\\ApiDB.csproj": {
+    "C:\\Users\\yuram\\OneDrive\\Рабочий стол\\Курсовая\\CalStrat\\ApiDB\\ApiDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ArtSe\\Desktop\\CalStrat\\ApiDB\\ApiDB.csproj",
+        "projectUniqueName": "C:\\Users\\yuram\\OneDrive\\Рабочий стол\\Курсовая\\CalStrat\\ApiDB\\ApiDB.csproj",
         "projectName": "ApiDB",
-        "projectPath": "C:\\Users\\ArtSe\\Desktop\\CalStrat\\ApiDB\\ApiDB.csproj",
-        "packagesPath": "C:\\Users\\ArtSe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ArtSe\\Desktop\\CalStrat\\ApiDB\\obj\\",
+        "projectPath": "C:\\Users\\yuram\\OneDrive\\Рабочий стол\\Курсовая\\CalStrat\\ApiDB\\ApiDB.csproj",
+        "packagesPath": "C:\\Users\\yuram\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yuram\\OneDrive\\Рабочий стол\\Курсовая\\CalStrat\\ApiDB\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ArtSe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yuram\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,11 +39,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

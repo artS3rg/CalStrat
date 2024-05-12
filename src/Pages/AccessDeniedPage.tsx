@@ -1,8 +1,20 @@
 import { Box, Button, Grid } from "@mui/material";
 import { Footer } from "../Components/Footer";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Components/Redux/hooks";
+import { useEffect } from "react";
+import { login } from "../Components/Redux/user";
 
 export function AccessDeniedPage() {
+    
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        if (sessionStorage.getItem("jwt") != null && sessionStorage.getItem("jwt") != undefined) {
+            let data: string = sessionStorage.getItem("jwt")!
+            dispatch(login(data))
+        }
+    }, [])
+
     const navigate = useNavigate();
     return(
         <Grid sx={{ backgroundColor: "#E2E2E2" }}>

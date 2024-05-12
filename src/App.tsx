@@ -10,8 +10,7 @@ import { RootState } from './Components/Redux/store';
 
 function App() {
 
-  const selector = useAppSelector((state : RootState) => state.user)
-
+  const selector = useAppSelector((state: RootState) => state.user)
 
   return (
     <BrowserRouter>

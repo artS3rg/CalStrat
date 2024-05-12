@@ -46,7 +46,6 @@ export default function UserCard() {
     }
 
     useEffect(() => {
-
         if (sessionStorage.getItem("jwt") != null && sessionStorage.getItem("jwt") != undefined) {
             let data: string = sessionStorage.getItem("jwt")!
             dispatch(login(data))
