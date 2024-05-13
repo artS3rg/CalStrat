@@ -1,4 +1,4 @@
-import { Grid, Paper, TextField, Button } from "@mui/material";
+import { Grid, Paper, TextField, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import '/src/Styles/Text.css';
 import { useNavigate } from "react-router-dom";
@@ -61,15 +61,19 @@ export function LoginCard() {
             maxHeight: 540,
             maxWidth: 960,
             mt: 18,
-            ml: 20
+            ml: 20,
         }}>
             {stateForm ? 
             <Paper 
-            sx={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-            elevation={10} style={paperLogStyle}>
+                sx={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+                elevation={10} style={paperLogStyle}>
                 <Grid
-                sx={{ color: "#FFFFFF", fontFamily: "Roboto" }} textAlign="center">
-                    <h2 className="roboto-bold">Авторизация</h2>
+                    sx={{ color: "#FFFFFF"}} textAlign="center">
+                    <Typography sx={{
+                        fontFamily: "Russo One", 
+                        fontSize: 25,
+                        marginBottom: 2
+                    }}>Авторизация</Typography>
                 </Grid>
                 <TextField onChange={(e) => setStateEmail(e.target.value)}
                 sx={{
@@ -108,18 +112,23 @@ export function LoginCard() {
                 placeholder='Пароль' margin="dense" type='password' variant="standard" fullWidth required/>
                 <Button onClick={() => setStateAuth(true)}
                 sx={{
+                    fontFamily: 'Russo One',
                     backgroundColor: "#902B2B",
                     "&:hover": { backgroundColor: "#902B2B" }
                 }}
                 type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Вход</Button>
-                <Button sx={{ color: "#FFFFFF" }}
+                <Button sx={{ color: "#FFFFFF" , fontFamily: 'Russo One',}}
                 type='submit' color='primary' variant="text" style={btnstyle} onClick={() => setStateForm(false)} fullWidth>Регистрация</Button>
             </Paper> :
             <Paper
             sx={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             elevation={10} style={paperRegStyle}>
                 <Grid sx={{ color: "#FFFFFF" }} textAlign="center">
-                    <h2 className="roboto-bold">Регистрация</h2>
+                <Typography sx={{
+                        fontFamily: "Russo One", 
+                        fontSize: 25,
+                        marginBottom: 2
+                    }}>Регистрация</Typography>
                 </Grid>
                 <TextField
                 onChange={(e) => setStateLogin(e.target.value)}
@@ -196,11 +205,12 @@ export function LoginCard() {
                 variant="standard" placeholder='Подтверждение пароля' margin="dense" type='password' fullWidth required/>
                 <Button onClick={() => {if (statePass == stateConfPass && statePass != null) setStateAuth(true)}}
                 sx={{
+                    fontFamily: 'Russo One',
                     backgroundColor: "#902B2B",
                     "&:hover": { backgroundColor: "#902B2B" }
                 }}
                 type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Регистрация</Button>
-                <Button sx={{ color: "#FFFFFF" }}
+                <Button sx={{ fontFamily: 'Russo One', color: "#FFFFFF" }}
                 type='submit' color='primary' variant="text" style={btnstyle} onClick={() => setStateForm(true)} fullWidth>Вход</Button>
             </Paper>
             }

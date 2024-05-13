@@ -7,20 +7,20 @@ export default function Header() {
       <Container maxWidth="xl">
           <Toolbar>
             <img src='src/Assets/vector.png' height={60}/>
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'Yuji Mai, serif',
-                  fontWeight: 400,
-                  letterSpacing: '.3rem',
-                  color: 'white',
-                  fontSize: 25,
-                }}
-              >
-                Калорийный <br/>стратег
-              </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'Yuji Mai, serif',
+                fontWeight: 400,
+                letterSpacing: '.9rem',
+                color: 'white',
+                fontSize: 25,
+              }}
+            >
+              Калорийный <br/>стратег
+            </Typography>
           </Toolbar>
       </Container>
     </AppBar>

@@ -134,6 +134,11 @@
         "Name": "age",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "idActivity",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

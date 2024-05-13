@@ -38,7 +38,7 @@ export default function HistoryMeal() {
 
     const [KPFC, setKPFC] = React.useState<{kcal: number, proteins: number, fats: number, cars: number}>()
 
-    const handleKPFC = (products: Food[]) => {
+    useEffect (() => {
         let kc = 0
         let pr = 0
         let fat = 0
@@ -53,7 +53,7 @@ export default function HistoryMeal() {
         }
 
         setKPFC({kcal: kc, proteins: pr, fats: fat, cars: carb})
-    }
+    }, [products])
 
     const handleDeleteProduct = async (Id: string) => {
         const response = await fetch('https://localhost:7129/DB/DelUserProduct?ProductId=' + Id, {
@@ -106,9 +106,6 @@ export default function HistoryMeal() {
 
         setProducts(prs)
         console.log('products', products)
-        
-        handleKPFC(products)
-        console.log(KPFC)
 
     }
 

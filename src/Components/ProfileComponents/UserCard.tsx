@@ -31,7 +31,6 @@ export default function UserCard() {
     const [loginState, setLogin] = useState(selector.Nickname);
     const [email, setEmail] = useState(selector.Email);
     const [gender, setGender] = useState(genders[selector.GenderId]);
-    const [kkal, setKkal] = useState(2500);
     const [purpose, setPurpose] = useState(purposes[selector.IdAim]);
     const [activity, setActivity] = useState(activities[selector.IdActivity]);
     const [startWeight, setStartWeight] = useState(selector.InitWeight);
@@ -134,9 +133,9 @@ export default function UserCard() {
             </Grid>
             <ThemeProvider theme={theme}>
                 <Grid item xs={4} >
-                    <Typography marginLeft={2}>
+                    <Typography marginLeft={2} lineHeight={2}>
                         <p className="item_info">Имя</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.Nickname}</p> :
                                 <TextField
@@ -146,22 +145,10 @@ export default function UserCard() {
                                     defaultValue={selector.Nickname}
                                     onChange={(event) => setLogin(event.target.value)}
                                 />
-                        }</p>
-
-                        <p className="item_info">Возраст</p>
-                        <p>{
-                            editState.state === false ?
-                                <p className="item_info_value">{selector.Age}</p> :
-                                <TextField
-                                    type="number"
-                                    size="small"
-                                    defaultValue={selector.Age}
-                                    onChange={(event) => setAge(Number(event.target.value))}
-                                />
-                        }</p>
+                        }
 
                         <p className="item_info">Почта</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.Email}</p> :
                                 <TextField
@@ -170,10 +157,35 @@ export default function UserCard() {
                                     defaultValue={selector.Email}
                                     onChange={(event) => setEmail(event.target.value)}
                                 />
-                        }</p>
+                        }
+
+                        <p className="item_info">Возраст</p>
+                        {
+                            editState.state === false ?
+                                <p className="item_info_value">{selector.Age}</p> :
+                                <TextField
+                                    type="number"
+                                    size="small"
+                                    defaultValue={selector.Age}
+                                    onChange={(event) => setAge(Number(event.target.value))}
+                                />
+                        }
+
+                        <p className="item_info">Рост</p>
+                        {
+                            editState.state === false ?
+                                <p className="item_info_value">{selector.Height}</p> :
+                                <TextField
+                                    type="number"
+                                    color="primary"
+                                    size="small"
+                                    defaultValue={selector.Height}
+                                    onChange={(event) => setHeight(Number(event.target.value))}
+                                />
+                        }
 
                         <p className="item_info">Пол</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{genders[selector.GenderId]}</p> :
                                 <TextField
@@ -185,20 +197,20 @@ export default function UserCard() {
                                         <MenuItem key={option} value={option}>{option}</MenuItem>
                                     ))}
                                 </TextField>
-                        }</p>
+                        }
 
                         <p className="item_info">Энергетическая норма</p>
-                        <p>{
+                        {
                             <p className="item_info_value">{KcalFormula(selector.CurWeight, selector.Height, 19,
                                 activities[selector.IdActivity], genders[selector.GenderId], purposes[selector.IdAim])}</p>
-                        }</p>
+                        }
                     </Typography>
                 </Grid>
 
                 <Grid item xs={4} >
-                    <Typography marginLeft={2} >
+                    <Typography marginLeft={2} lineHeight={2}>
                         <p className="item_info">Цель</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{purposes[selector.IdAim]}</p> :
                                 <TextField
@@ -212,9 +224,9 @@ export default function UserCard() {
                                         <MenuItem key={option} value={option}>{option}</MenuItem>
                                     ))}
                                 </TextField>
-                        }</p>
+                        }
                         <p className="item_info">Активность</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{activities[selector.IdActivity]}</p> :
                                 <TextField
@@ -228,9 +240,9 @@ export default function UserCard() {
                                         <MenuItem key={option} value={option}>{option}</MenuItem>
                                     ))}
                                 </TextField>
-                        }</p>
+                        }
                         <p className="item_info">Начальный вес, кг</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.InitWeight}</p> :
                                 <TextField
@@ -240,9 +252,10 @@ export default function UserCard() {
                                     defaultValue={selector.InitWeight}
                                     onChange={(event) => setStartWeight(Number(event.target.value))}
                                 />
-                        }</p>
+                        }
+
                         <p className="item_info">Текущий вес, кг</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.CurWeight}</p> :
                                 <TextField
@@ -252,10 +265,10 @@ export default function UserCard() {
                                     defaultValue={selector.CurWeight}
                                     onChange={(event) => setCurrentWeight(Number(event.target.value))}
                                 />
-                        }</p>
+                        }
 
                         <p className="item_info">Целевой вес, кг</p>
-                        <p>{
+                        {
                             editState.state === false ?
                                 <p className="item_info_value">{selector.AimWeight}</p> :
                                 <TextField
@@ -265,20 +278,9 @@ export default function UserCard() {
                                     defaultValue={selector.AimWeight}
                                     onChange={(event) => setPurposeWeight(Number(event.target.value))}
                                 />
-                        }</p>
+                        }
 
-                        <p className="item_info">Рост</p>
-                        <p>{
-                            editState.state === false ?
-                                <p className="item_info_value">{selector.Height}</p> :
-                                <TextField
-                                    type="number"
-                                    color="primary"
-                                    size="small"
-                                    defaultValue={selector.Height}
-                                    onChange={(event) => setHeight(Number(event.target.value))}
-                                />
-                        }</p>
+                        
                     </Typography>
                 </Grid>
             </ThemeProvider>

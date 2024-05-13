@@ -74,12 +74,15 @@
 
 .item_info{
     font-family: 'Russo One';
-
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .item_info_value{
     font-family: "Sarala";
     font-weight: 500;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .HMName{
